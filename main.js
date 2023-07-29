@@ -116,8 +116,20 @@ for (let i = 0; i < totalSeconds; i+= timestepInSeconds) {
 // Por último, pasamos este objeto positionsOverTime a nuestro punto
 const satellitePoint = viewer.entities.add({
   position: positionsOverTime,
-  point: { pixelSize: 5, color: Cesium.Color.YELLOW }
+  point: { pixelSize: 6, color: Cesium.Color.YELLOW }
 });
 
-// // El punto se moverá según se mueva la línea de tiempo de la parte inferior. Para fijar la cámara al punto en movimiento hacemos:
+// El punto se moverá según se mueva la línea de tiempo de la parte inferior. Para fijar la cámara al punto en movimiento hacemos:
 viewer.trackedEntity = satellitePoint;
+
+let initialized = false;
+    viewer.scene.globe.tileLoadProgressEvent.addEventListener(() => {
+      if (!initialized && viewer.scene.globe.tilesLoaded === true) {
+        viewer.clock.shouldAnimate = true;
+        initialized = true;
+        viewer.scene.camera.zoomOut(7000000);
+        document.querySelector("#loading").classList.toggle('disappear', true)
+      }
+    });
+
+// 
