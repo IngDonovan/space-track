@@ -59,15 +59,31 @@ console.log(position.height);// in km
 //-----------------------------------------\
 
 // Initialize the Cesium viewer.
+// We then initialize the viewer. Here we pass in some extra options to disable functionality that requires an access token:
 const viewer = new Cesium.Viewer('cesiumContainer', {
   imageryProvider: new Cesium.TileMapServiceImageryProvider({
     url: Cesium.buildModuleUrl("Assets/Textures/NaturalEarthII"),
   }),
-  baseLayerPicker: false, geocoder: false, homeButton: false, infoBox: false,
-  navigationHelpButton: false, sceneModePicker: false
+  baseLayerPicker: false, 
+  geocoder: false, 
+  homeButton: false, 
+  infoBox: false,
+  navigationHelpButton: false, 
+  sceneModePicker: false
 });
 viewer.scene.globe.enableLighting = true;
-  
+
+//Finally, we'll visualize the satellite position as a red dot in space:
+const satellitePoint = viewer.entities.add({
+  position: Cesium.Cartesian3.fromRadians(
+    position.longitude, 
+    position.latitude, 
+    position.height * 1000
+  ),
+  point: { 
+    pixelSize: 5, 
+    color: Cesium.Color.RED }
+});
   
   
   
