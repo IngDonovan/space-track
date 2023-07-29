@@ -56,6 +56,17 @@ console.log(position.longitude);// in radians
 console.log(position.latitude);// in radians
 console.log(position.height);// in km
   
+//-----------------------------------------\
+
+// Initialize the Cesium viewer.
+const viewer = new Cesium.Viewer('cesiumContainer', {
+  imageryProvider: new Cesium.TileMapServiceImageryProvider({
+    url: Cesium.buildModuleUrl("Assets/Textures/NaturalEarthII"),
+  }),
+  baseLayerPicker: false, geocoder: false, homeButton: false, infoBox: false,
+  navigationHelpButton: false, sceneModePicker: false
+});
+viewer.scene.globe.enableLighting = true;
   
   
   
