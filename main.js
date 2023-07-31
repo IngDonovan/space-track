@@ -40,7 +40,7 @@ console.log(tl2);
 const satrec = satellite.twoline2satrec(tl1,tl2);
 console.log(satrec);
 
-// Get the position of the satellite at the given date
+//Obtener la posición del satélite en la fecha dada
 const date = new Date();
 console.log(date);
 
@@ -58,8 +58,8 @@ console.log(position.height);// in km
   
 //-----------------------------------------\
 
-// Initialize the Cesium viewer.
-// We then initialize the viewer. Here we pass in some extra options to disable functionality that requires an access token:
+// Inicialice el visor Cesium.
+// Luego inicializamos el visor. Aquí pasamos algunas opciones adicionales para deshabilitar la funcionalidad que requiere un token de acceso:
 const viewer = new Cesium.Viewer('cesiumContainer', {
   imageryProvider: new Cesium.TileMapServiceImageryProvider({
     url: Cesium.buildModuleUrl("Assets/Textures/NaturalEarthII"),
@@ -73,7 +73,7 @@ const viewer = new Cesium.Viewer('cesiumContainer', {
 });
 viewer.scene.globe.enableLighting = true;
 
-//Finally, we'll visualize the satellite position as a red dot in space:
+//Finalmente, visualizaremos la posición del satélite como un punto rojo en el espacio:
 // const satellitePoint = viewer.entities.add({
 //   position: Cesium.Cartesian3.fromRadians(
 //     position.longitude, 
@@ -85,9 +85,9 @@ viewer.scene.globe.enableLighting = true;
 //     color: Cesium.Color.RED }
 // });
 
-// Give SatelliteJS the TLE's and a specific time.
-// Get back a longitude, latitude, height (km).
-// We're going to generate a position every 10 seconds from now until 6 seconds from now. 
+// Proporcione a SatelliteJS los TLE y una hora específica..
+// Recuperar una longitud, latitud, altura (km).
+// Vamos a generar una posición cada 10 segundos desde ahora hasta dentro de 6 segundos.
 const totalSeconds = 60 * 60 * 6;
 const timestepInSeconds = 10;
 const start = Cesium.JulianDate.fromDate(new Date());
