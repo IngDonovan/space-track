@@ -1,8 +1,6 @@
-// import fetch from 'node-fetch';
 const API = 'https://api.tinygs.com/v1';
 const ALLSAT = '/satellites';
 const ONESAT = '/satellite';
-console.log('hola');
 
 async function fetchData(urlApi) {
     const response = await fetch(urlApi);
