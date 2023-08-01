@@ -1,6 +1,7 @@
 const API = 'https://api.tinygs.com/v1';
 const ALLSAT = '/satellites';
 const ONESAT = '/satellite';
+const SatsNames = [];
 
 async function fetchData(urlApi) {
     const response = await fetch(urlApi);
@@ -127,7 +128,8 @@ const searchSatellites = async (urlApi) => {
     //   }
 
         orbSatellites.forEach(satellite => {
-            console.log(satellite.name);
+            // console.log(satellite.name);
+            SatsNames.push(satellite.name);
         });
         // console.log(products);
         // console.log(product.title);
