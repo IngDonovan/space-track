@@ -34,27 +34,27 @@ const PlatziSat_01 =
   2 88888  97.5077 280.5424 0008220 228.6198 130.8530 15.11803180  1009`;
 const tl1 = PlatziSat_01.split('\n')[0].trim();
 const tl2 = PlatziSat_01.split('\n')[1].trim();
-console.log(tl1);
-console.log(tl2);
+// console.log(tl1);
+// console.log(tl2);
 
 const satrec = satellite.twoline2satrec(tl1,tl2);
-console.log(satrec);
+// console.log(satrec);
 
 //Obtener la posición del satélite en la fecha dada
 const date = new Date();
-console.log(date);
+// console.log(date);
 
 const positionAndVelocity = satellite.propagate(satrec, date);
-console.log(positionAndVelocity);
+// console.log(positionAndVelocity);
 
 const gmst = satellite.gstime(date);
-console.log(gmst);
+// console.log(gmst);
 
 const position = satellite.eciToGeodetic(positionAndVelocity.position, gmst);
 
-console.log(position.longitude);// in radians
-console.log(position.latitude);// in radians
-console.log(position.height);// in km
+// console.log(position.longitude);// in radians
+// console.log(position.latitude);// in radians
+// console.log(position.height);// in km
   
 //-----------------------------------------\
 
