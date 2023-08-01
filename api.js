@@ -148,4 +148,4 @@ async function searchSat(urlApi, nameSat) {
 }
 
 searchSatellites(API);
-searchSat(API, 'FossaSat-FX14')
+searchSat(API, 'FossaSat-FX14');

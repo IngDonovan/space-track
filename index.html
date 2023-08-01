@@ -2,19 +2,39 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <link rel="icon" type="image/svg+xml" href="./assets/AntICO.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Map</title>
+    <title>X-TRACK</title>
     <!-- <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
      integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY="
      crossorigin=""/> -->
+     <link rel="preconnect" href="https://fonts.googleapis.com">
+     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+     <link href="https://fonts.googleapis.com/css2?family=Gruppo&display=swap" rel="stylesheet">
+
     <link href="https://cesium.com/downloads/cesiumjs/releases/1.81/Build/Cesium/Widgets/widgets.css" rel="stylesheet">
 
      <link rel="stylesheet" href="./main.css">
 </head>
 <body>
     <div id="loading">
-        <h1>Loading...</h1>
+        <h2>Explora el mundo en tiempo real</h2>
+        <p>Loading...</p>
     </div>
+    <header>
+        <div class="logo">
+            <figure>
+                <img src="./assets/AntICO.svg" alt="">
+            </figure>
+            <h1>
+                X-TRACK
+            </h1>
+        </div>
+        <figure class="menu">
+            <img src="./assets/Menu-telescope.svg" alt="">
+        </figure>
+
+    </header>
     <div id="cesiumContainer"></div>
 
     <!-- <div id="map">Aca va un mapa</div> -->
