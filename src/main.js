@@ -1,6 +1,8 @@
 const menuIco = document.querySelector('.menu');
 const trackID = document.querySelector('#trackID');
 
+console.log(selectElement);
+
 menuIco.addEventListener('click', toggleMenu);
 
 function toggleMenu(){
@@ -9,6 +11,7 @@ function toggleMenu(){
   if (isAsideClose && (SatsNames == 0)) {
     searchSatellites(API);
     console.log('Satellites Names',SatsNames);
+
   }
   trackID.classList.toggle('inactive');
 }
