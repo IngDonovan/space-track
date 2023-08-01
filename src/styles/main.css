@@ -64,7 +64,7 @@ header{
 .menu:hover path{
   fill: #F19D59;
 }
-.track-aside{
+.trackMenu{
   width: 100vw;
   height: 360px;
   display: flex;
@@ -79,11 +79,12 @@ header{
   color: white;
   background:linear-gradient(0deg, rgba(0, 0, 0, 0.2) 0%, rgba(0, 0, 0, 0) 100%), linear-gradient(180deg, rgba(0, 0, 0, 0.00) 0%, rgba(5, 20, 27, 0.70) 35.14%);
 }
-.track-aside--disabled{
+.inactive{
   display: none;
 }
 
-.track-aside p{
+
+.trackMenu p{
   align-self: flex-start;
   padding-left: 16px;
   font-family: 'Inter', sans-serif;
@@ -91,7 +92,7 @@ header{
   font-weight: 600;
 }
 
-.track-aside .container {
+.trackMenu .container {
 
   display: flex;
   position: relative;
