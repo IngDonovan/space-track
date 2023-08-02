@@ -25,6 +25,7 @@ const namesElements = document.getElementById("sateSelec");
 const allButton = document.getElementById("allButton");
 const searchInput = document.getElementById("searchInput")
 const satelliteOptions = document.getElementById("satelliteOptions");
+const searchButton = document.getElementById("searchButton");
 
 searchInput.addEventListener('input',(event) => {
   const typedText = event.target.value.trim().toLowerCase();
@@ -40,15 +41,26 @@ searchInput.addEventListener('input',(event) => {
   });
 });
 
+searchButton.addEventListener('click', () => {
+  const typedText = searchInput.value;
+  console.log('Send Satellite Search:', typedText);
+  const selectedSatellite = satellitesData.find(satellite => satellite.name === typedText);
+  const platziName =  satellitesData.find(satellite => 'FossaSat-FX14' === typedText);
+  if (!selectedSatellite && !platziName){
+    searchSat(typedText);
+  } else {
+    console.log('ya está grabado');
+  }
+})
+
 namesElements.addEventListener('change', (event) => {
   const selectedSatelliteName = event.target.value;
   console.log('Selected Satellite:', selectedSatelliteName);
-  
 });
 
 allButton.addEventListener('click', () => {
   const selectedSatelliteName = namesElements.value;
-  console.log('Send Satellite:', selectedSatelliteName);
+  console.log('Send Satellite All:', selectedSatelliteName);
   // Buscar el satélite en el array satellitesData
   const selectedSatellite = satellitesData.find(satellite => satellite.name === selectedSatelliteName);
   const platziName =  satellitesData.find(satellite => 'FossaSat-FX14' === selectedSatelliteName);
@@ -65,7 +77,7 @@ function toggleMenu(){
   const isAsideClose = trackID.classList.contains('inactive');
   // console.log(isAsideClose);
   if (isAsideClose && (SatsNames == 0)) {
-    searchSatellites();
+    searchSatellitesToShow();
     // console.log('Satellites Names',SatsNames); 
   }
   trackID.classList.toggle('inactive');
@@ -81,7 +93,7 @@ async function fetchData(urlApi) {
     return data;
 }
 
-const searchSatellites = async () => {
+const searchSatellitesToShow = async () => {
     try {
         const orbSatellites = await fetchData(`${API + ALLSAT}`);
 
