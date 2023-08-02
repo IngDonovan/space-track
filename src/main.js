@@ -69,7 +69,7 @@ async function searchSat(urlApi, nameSat) {
         newTl1 = `${orbSat.tle[1]}`;
         newTl2 = `${orbSat.tle[2]}`;
         console.log('New Tle',orbSat.tle[0]);
-        console.log(tle);
+          //console.log(tle);
         //loadMap(orbSat.tle[1],orbSat.tle[2]);
     } catch (error) {
         console.error(error);
@@ -80,7 +80,7 @@ async function searchSat(urlApi, nameSat) {
 // searchSat(API, 'Norbi');
 
 async function loadMap (newTl1, newTl2) {
-  console.log('nuevo TLE');
+  console.log('TLE');
   console.log(newTl1);
   console.log(newTl2);
   const satrec = satellite.twoline2satrec(newTl1,newTl2);
