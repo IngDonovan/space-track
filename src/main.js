@@ -8,6 +8,19 @@ const SatsNames = [];
 let newTl0 = '';
 let newTl1 = '';
 let newTl2 = '';
+const satellitesData = [
+  {
+    name: 'PlatziSat-1',
+    tle1: '1 88888U 24001FA  23163.94096086  .00000000  00000-0  10000-4 0  9999',
+    tle2: '2 88888  97.5077 280.5424 0008220 228.6198 130.8530 15.11803180  1009',
+  },
+  {
+    name: 'Norby-2',
+    tle1: '1 57181U 23091R   23214.09222394  .00004444  00000+0  33119-3 0  9995',
+    tle2: '2 57181  97.6618 264.4411 0019931 129.3314 230.9682 15.03254832  5333',
+  },
+  // ... Add more satellites here
+];
 
 const menuIco = document.querySelector('.menu');
 const trackID = document.querySelector('#trackID');
@@ -26,11 +39,13 @@ function toggleMenu(){
   // console.log(isAsideClose);
   if (isAsideClose && (SatsNames == 0)) {
     searchSatellites(API);
-    // console.log('Satellites Names',SatsNames);
-    
+    // console.log('Satellites Names',SatsNames); 
   }
-  
   trackID.classList.toggle('inactive');
+  if (!isAsideClose) {
+    console.log('loadAll');
+    loadAllSatellites();
+  }
 }
 
 async function fetchData(urlApi) {
@@ -65,72 +80,106 @@ async function searchSat(urlApi, nameSat) {
         // tl0 = `${orbSat.tle[0]}`
         // tl1 = `${orbSat.tle[1]}`;
         // tl2 = `${orbSat.tle[2]}`;
-        newTl0 = `${orbSat.tle[0]}`
-        newTl1 = `${orbSat.tle[1]}`;
-        newTl2 = `${orbSat.tle[2]}`;
-        console.log('New Tle',orbSat.tle[0]);
+        // newTl0 = `${orbSat.tle[0]}`
+        // newTl1 = `${orbSat.tle[1]}`;
+        // newTl2 = `${orbSat.tle[2]}`;
+        console.log('Tle',orbSat.tle[0]);
+        console.log('Tle',orbSat.tle[1]);
+        console.log('Tle',orbSat.tle[2]);
           //console.log(tle);
         //loadMap(orbSat.tle[1],orbSat.tle[2]);
+        satellitesData.push({
+          name: nameSat,
+          tle1: orbSat.tle[1],
+          tle2: orbSat.tle[2],
+        });
     } catch (error) {
         console.error(error);
     }
 }
 
+const searchAllSatellites = async () => {
+  try {
+    for (const name of satelliteNames) {
+      const orbSat = await fetchData(`${API + ONESAT}/${name}`);
+      satellitesData.push({ name: orbSat.name, tle: [orbSat.tle[0], orbSat.tle[1]] });
+    }
+    // Una vez que se hayan obtenido los TLE de todos los satélites, cargamos el mapa.
+    loadMap();
+  } catch (error) {
+    console.error(error);
+  }
+};//revew-------------------
+
+async function loadAllSatellites() {
+  try {
+    for (const sat of satellitesData) {
+      const satrec = satellite.twoline2satrec(sat.tle1, sat.tle2);
+      loadMap(satrec);
+    }
+  } catch (error) {
+    console.error(error);
+  }
+}
+
 // searchSatellites(API);
 // searchSat(API, 'Norbi');
 
-async function loadMap (newTl1, newTl2) {
-  console.log('TLE');
-  console.log(newTl1);
-  console.log(newTl2);
-  const satrec = satellite.twoline2satrec(newTl1,newTl2);
+// -----------------------------------
+//inicializamos el visor. Aquí pasamos algunas opciones adicionales para deshabilitar la funcionalidad que requiere un token de acceso:
+const viewer = new Cesium.Viewer('cesiumContainer', {
+  imageryProvider: new Cesium.TileMapServiceImageryProvider({
+    url: Cesium.buildModuleUrl("Assets/Textures/NaturalEarthII"),
+  }),
+  baseLayerPicker: false, 
+  geocoder: false, 
+  homeButton: false, 
+  infoBox: false,
+  navigationHelpButton: false, 
+  sceneModePicker: false
+});
+viewer.scene.globe.enableLighting = true;
+// -------------------------------------------------
+
+
+async function loadMap (satrec) {
+  // console.log('TLE');
+  // console.log(newTl1);
+  // console.log(newTl2);
+  // const satrec = satellite.twoline2satrec(newTl1,newTl2);
   const date = new Date();
   const positionAndVelocity = satellite.propagate(satrec, date);
   const gmst = satellite.gstime(date);
   const position = satellite.eciToGeodetic(positionAndVelocity.position, gmst);
-  console.log(position.longitude);// in radians
-  console.log(position.latitude);// in radians
-  console.log(position.height);// in km
+  // console.log(position.longitude);// in radians
+  // console.log(position.latitude);// in radians
+  // console.log(position.height);// in km
  //---------------------------------------------------------------
 
-  const viewer = new Cesium.Viewer('cesiumContainer', {
-    imageryProvider: new Cesium.TileMapServiceImageryProvider({
-      url: Cesium.buildModuleUrl("Assets/Textures/NaturalEarthII"),
-    }),
-    baseLayerPicker: false, 
-    geocoder: false, 
-    homeButton: false, 
-    infoBox: false,
-    navigationHelpButton: false, 
-    sceneModePicker: false
-  });
-  viewer.scene.globe.enableLighting = true;
+  const totalSeconds = 60 * 60 * 6;
+  const timestepInSeconds = 10;
+  const start = Cesium.JulianDate.fromDate(new Date());
+  const stop = Cesium.JulianDate.addSeconds(start, totalSeconds, new Cesium.JulianDate());
+  viewer.clock.startTime = start.clone();
+  viewer.clock.stopTime = stop.clone();
+  viewer.clock.currentTime = start.clone();
+  viewer.timeline.zoomTo(start, stop);
+  viewer.clock.multiplier = 40;
+  viewer.clock.clockRange = Cesium.ClockRange.LOOP_STOP;
 
+  const positionsOverTime = new Cesium.SampledPositionProperty();
 
-    const totalSeconds = 60 * 60 * 6;
-    const timestepInSeconds = 10;
-    const start = Cesium.JulianDate.fromDate(new Date());
-    const stop = Cesium.JulianDate.addSeconds(start, totalSeconds, new Cesium.JulianDate());
-    viewer.clock.startTime = start.clone();
-    viewer.clock.stopTime = stop.clone();
-    viewer.clock.currentTime = start.clone();
-    viewer.timeline.zoomTo(start, stop);
-    viewer.clock.multiplier = 40;
-    viewer.clock.clockRange = Cesium.ClockRange.LOOP_STOP;
+  for (let i = 0; i < totalSeconds; i+= timestepInSeconds) {
+    const time = Cesium.JulianDate.addSeconds(start, i, new Cesium.JulianDate());
+    const jsDate = Cesium.JulianDate.toDate(time);
 
-    const positionsOverTime = new Cesium.SampledPositionProperty();
-
-    for (let i = 0; i < totalSeconds; i+= timestepInSeconds) {
-      const time = Cesium.JulianDate.addSeconds(start, i, new Cesium.JulianDate());
-      const jsDate = Cesium.JulianDate.toDate(time);
-
-      const positionAndVelocity = satellite.propagate(satrec, jsDate);
-      const gmst = satellite.gstime(jsDate);
-      const p   = satellite.eciToGeodetic(positionAndVelocity.position, gmst);
-      // ...Get position from satellite-js...
-      const position = Cesium.Cartesian3.fromRadians(p.longitude, p.latitude, p.height * 1000);
-      positionsOverTime.addSample(time, position);
-    }
+    const positionAndVelocity = satellite.propagate(satrec, jsDate);
+    const gmst = satellite.gstime(jsDate);
+    const p   = satellite.eciToGeodetic(positionAndVelocity.position, gmst);
+    // ...Get position from satellite-js...
+    const position = Cesium.Cartesian3.fromRadians(p.longitude, p.latitude, p.height * 1000);
+    positionsOverTime.addSample(time, position);
+  }
 
     //-----------------
     // const satelliteEntity = new Cesium.Entity({
@@ -144,9 +193,6 @@ async function loadMap (newTl1, newTl2) {
     // });
 
 
-
-
-
     // Por último, pasamos este objeto positionsOverTime a nuestro punto
     const satellitePoint = viewer.entities.add({
       position: positionsOverTime,
@@ -156,11 +202,11 @@ async function loadMap (newTl1, newTl2) {
       //   height: 64,
       // },
       label: {
-        text: "PlatziSat-1",
+        text: tl0,
         font: "14pt monospace",
         style: Cesium.LabelStyle.FILL_AND_OUTLINE,
         outlineWidth: 2,
-        // verticalOrigin: Cesium.VerticalOrigin.TOP,
+        //verticalOrigin: Cesium.VerticalOrigin.TOP,
         pixelOffset: new Cesium.Cartesian2(0, 32),
       },
       point: { 
@@ -174,17 +220,18 @@ async function loadMap (newTl1, newTl2) {
     // viewer.trackedEntity = satelliteEntity;
 
     let initialized = false;
-        viewer.scene.globe.tileLoadProgressEvent.addEventListener(() => {
-          if (!initialized && viewer.scene.globe.tilesLoaded === true) {
-            viewer.clock.shouldAnimate = true;
-            initialized = true;
-            viewer.scene.camera.zoomOut(7000000);
-            document.querySelector("#loading").classList.toggle('disappear', true)
-          }
-        });
+    viewer.scene.globe.tileLoadProgressEvent.addEventListener(() => {
+      if (!initialized && viewer.scene.globe.tilesLoaded === true) {
+        viewer.clock.shouldAnimate = true;
+        initialized = true;
+        viewer.scene.camera.zoomOut(7000000);
+        document.querySelector("#loading").classList.toggle('disappear', true)
+      }
+    });
+        
 }
-
-loadMap(tl1,tl2);
+const satrec = satellite.twoline2satrec(satellitesData[0].tle1, satellitesData[0].tle2);
+loadMap(satrec);
 
 // -----------------------------------
 /*
