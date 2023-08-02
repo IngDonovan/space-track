@@ -1,13 +1,9 @@
-// let tl0 ='PlatziSat-1';
-// let tl1 ='1 88888U 24001FA  23163.94096086  .00000000  00000-0  10000-4 0  9999';
-// let tl2 ='2 88888  97.5077 280.5424 0008220 228.6198 130.8530 15.11803180  1009';
+
 const API = 'https://api.tinygs.com/v1';
 const ALLSAT = '/satellites';
 const ONESAT = '/satellite';
 const SatsNames = [];
-let newTl0 = '';
-let newTl1 = '';
-let newTl2 = '';
+
 const satellitesData = [
   {
     name: 'PlatziSat-1',
@@ -15,9 +11,9 @@ const satellitesData = [
     tle2: '2 88888  97.5077 280.5424 0008220 228.6198 130.8530 15.11803180  1009',
   },
   {
-    name: 'Norby-2',
-    tle1: '1 57181U 23091R   23214.09222394  .00004444  00000+0  33119-3 0  9995',
-    tle2: '2 57181  97.6618 264.4411 0019931 129.3314 230.9682 15.03254832  5333',
+    name: 'ISS',
+    tle1: '1 25544U 98067A   08264.51782528 -.00002182  00000-0 -11606-4 0  2927',
+    tle2: '2 25544  51.6416 247.4627 0006703 130.5360 325.0288 15.72125391563537',
   },
   // ... Add more satellites here
 ];
@@ -29,9 +25,16 @@ const trackID = document.querySelector('#trackID');
 const namesElements = document.getElementById("sateSelec");
 const allButton = document.getElementById("allButton");
 
+namesElements.addEventListener('change', (event) => {
+  const selectedSatelliteName = event.target.value;
+  console.log('Selected Satellite:', selectedSatelliteName);
+  
+});
+
 allButton.addEventListener('click', () => {
-  console.log('click');
-  searchSat(API, 'FEES');
+  const selectedSatelliteName = namesElements.value;
+  console.log('Send Satellite:', selectedSatelliteName);
+  searchSat(API, selectedSatelliteName);
 })
 
 menuIco.addEventListener('click', toggleMenu);
