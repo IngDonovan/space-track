@@ -69,8 +69,8 @@ async function searchSat(urlApi, nameSat) {
         newTl1 = `${orbSat.tle[1]}`;
         newTl2 = `${orbSat.tle[2]}`;
         console.log('New Tle',orbSat.tle[0]);
-        // console.log(tle);
-        loadMap(orbSat.tle[1],orbSat.tle[2]);
+        console.log(tle);
+        //loadMap(orbSat.tle[1],orbSat.tle[2]);
     } catch (error) {
         console.error(error);
     }
