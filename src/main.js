@@ -35,7 +35,8 @@ allButton.addEventListener('click', () => {
   console.log('Send Satellite:', selectedSatelliteName);
   // Buscar el satélite en el array satellitesData
   const selectedSatellite = satellitesData.find(satellite => satellite.name === selectedSatelliteName);
-  if (!selectedSatellite){
+  const platziName =  satellitesData.find(satellite => 'FossaSat-FX14' === selectedSatelliteName);
+  if (!selectedSatellite && !platziName){
     searchSat(selectedSatelliteName);
   } else {
     console.log('ya está grabado');
@@ -48,12 +49,12 @@ function toggleMenu(){
   const isAsideClose = trackID.classList.contains('inactive');
   // console.log(isAsideClose);
   if (isAsideClose && (SatsNames == 0)) {
-    searchSatellites(API);
+    searchSatellites();
     // console.log('Satellites Names',SatsNames); 
   }
   trackID.classList.toggle('inactive');
   if (!isAsideClose) {
-    console.log('loadAll');
+    console.log('Cargando Nuevo');
     loadAllSatellites();
   }
 }
@@ -64,9 +65,9 @@ async function fetchData(urlApi) {
     return data;
 }
 
-const searchSatellites = async (urlApi) => {
+const searchSatellites = async () => {
     try {
-        const orbSatellites = await fetchData(`${urlApi + ALLSAT}`);
+        const orbSatellites = await fetchData(`${API + ALLSAT}`);
 
         orbSatellites.forEach(satellite => {
             // console.log(satellite.name);
@@ -101,18 +102,18 @@ async function searchSat(nameSat) {
     }
 }
 
-const searchAllSatellites = async () => {
-  try {
-    for (const name of satelliteNames) {
-      const orbSat = await fetchData(`${API + ONESAT}/${name}`);
-      satellitesData.push({ name: orbSat.name, tle: [orbSat.tle[0], orbSat.tle[1]] });
-    }
-    // Una vez que se hayan obtenido los TLE de todos los satélites, cargamos el mapa.
-    loadMap();
-  } catch (error) {
-    console.error(error);
-  }
-};//revew-------------------
+// const searchAllSatellites = async () => {
+//   try {
+//     for (const name of satelliteNames) {
+//       const orbSat = await fetchData(`${API + ONESAT}/${name}`);
+//       satellitesData.push({ name: orbSat.name, tle: [orbSat.tle[0], orbSat.tle[1]] });
+//     }
+//     // Una vez que se hayan obtenido los TLE de todos los satélites, cargamos el mapa.
+//     loadMap();
+//   } catch (error) {
+//     console.error(error);
+//   }
+// };//revew-------------------
 
 async function loadAllSatellites() {
   try {
