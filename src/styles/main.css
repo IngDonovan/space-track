@@ -138,3 +138,10 @@ outline-color: white;
 .container picture:hover path{
   fill: #F19D59;
 }
+
+@media (min-width: 481px) {
+  .trackMenu{
+    width: 400px;
+    right: 0px;
+  }
+}
