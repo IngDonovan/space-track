@@ -223,11 +223,11 @@ async function loadMap (satrec, nameSat) {
     // Por último, pasamos este objeto positionsOverTime a nuestro punto
     const satellitePoint = viewer.entities.add({
       position: positionsOverTime,
-      // billboard: {
-      //   image: "../assets/SatellitePlatzi.png",
-      //   width: 64,
-      //   height: 64,
-      // },
+      billboard: {
+        image: '../assets/FP_Satellite_icon.png',
+        width: 64,
+        height: 64,
+      },
       label: {
         text: nameSat,
         font: "14pt monospace",
