@@ -1,6 +1,6 @@
-let tl0 ='PlatziSat-1';
-let tl1 ='1 88888U 24001FA  23163.94096086  .00000000  00000-0  10000-4 0  9999';
-let tl2 ='2 88888  97.5077 280.5424 0008220 228.6198 130.8530 15.11803180  1009';
+// let tl0 ='PlatziSat-1';
+// let tl1 ='1 88888U 24001FA  23163.94096086  .00000000  00000-0  10000-4 0  9999';
+// let tl2 ='2 88888  97.5077 280.5424 0008220 228.6198 130.8530 15.11803180  1009';
 const API = 'https://api.tinygs.com/v1';
 const ALLSAT = '/satellites';
 const ONESAT = '/satellite';
@@ -21,6 +21,8 @@ const satellitesData = [
   },
   // ... Add more satellites here
 ];
+const satrec = satellite.twoline2satrec(satellitesData[0].tle1, satellitesData[0].tle2);
+const satName = satellitesData[0].name;
 
 const menuIco = document.querySelector('.menu');
 const trackID = document.querySelector('#trackID');
@@ -76,18 +78,11 @@ const searchSatellites = async (urlApi) => {
 async function searchSat(urlApi, nameSat) {
     try {
         const orbSat = await fetchData(`${urlApi + ONESAT}/${nameSat}`);
-        // const tle = `${orbSat.tle[1]}\n${orbSat.tle[2]}`;
-        // tl0 = `${orbSat.tle[0]}`
-        // tl1 = `${orbSat.tle[1]}`;
-        // tl2 = `${orbSat.tle[2]}`;
-        // newTl0 = `${orbSat.tle[0]}`
-        // newTl1 = `${orbSat.tle[1]}`;
-        // newTl2 = `${orbSat.tle[2]}`;
+
         console.log('Tle',orbSat.tle[0]);
         console.log('Tle',orbSat.tle[1]);
         console.log('Tle',orbSat.tle[2]);
-          //console.log(tle);
-        //loadMap(orbSat.tle[1],orbSat.tle[2]);
+
         satellitesData.push({
           name: nameSat,
           tle1: orbSat.tle[1],
@@ -114,8 +109,9 @@ const searchAllSatellites = async () => {
 async function loadAllSatellites() {
   try {
     for (const sat of satellitesData) {
+      const nameSat = sat.name;
       const satrec = satellite.twoline2satrec(sat.tle1, sat.tle2);
-      loadMap(satrec);
+      loadMap(satrec, nameSat);
     }
   } catch (error) {
     console.error(error);
@@ -142,11 +138,8 @@ viewer.scene.globe.enableLighting = true;
 // -------------------------------------------------
 
 
-async function loadMap (satrec) {
-  // console.log('TLE');
-  // console.log(newTl1);
-  // console.log(newTl2);
-  // const satrec = satellite.twoline2satrec(newTl1,newTl2);
+async function loadMap (satrec, nameSat) {
+
   const date = new Date();
   const positionAndVelocity = satellite.propagate(satrec, date);
   const gmst = satellite.gstime(date);
@@ -202,7 +195,7 @@ async function loadMap (satrec) {
       //   height: 64,
       // },
       label: {
-        text: tl0,
+        text: nameSat,
         font: "14pt monospace",
         style: Cesium.LabelStyle.FILL_AND_OUTLINE,
         outlineWidth: 2,
@@ -230,8 +223,8 @@ async function loadMap (satrec) {
     });
         
 }
-const satrec = satellite.twoline2satrec(satellitesData[0].tle1, satellitesData[0].tle2);
-loadMap(satrec);
+
+loadMap(satrec,satName);
 
 // -----------------------------------
 /*
