@@ -131,14 +131,47 @@ async function loadMap (newTl1, newTl2) {
       const position = Cesium.Cartesian3.fromRadians(p.longitude, p.latitude, p.height * 1000);
       positionsOverTime.addSample(time, position);
     }
+
+    //-----------------
+    // const satelliteEntity = new Cesium.Entity({
+    //   position: positionsOverTime,
+    // });
+    // // Si usas un archivo PNG como ícono
+    // satelliteEntity.billboard = new Cesium.BillboardGraphics({
+    //   image: '../assets/SatellitePlatzi.png',
+    //   width: 30,
+    //   height: 30,
+    // });
+
+
+
+
+
     // Por último, pasamos este objeto positionsOverTime a nuestro punto
     const satellitePoint = viewer.entities.add({
       position: positionsOverTime,
-      point: { pixelSize: 6, color: Cesium.Color.YELLOW }
+      // billboard: {
+      //   image: "../assets/SatellitePlatzi.png",
+      //   width: 64,
+      //   height: 64,
+      // },
+      label: {
+        text: "PlatziSat-1",
+        font: "14pt monospace",
+        style: Cesium.LabelStyle.FILL_AND_OUTLINE,
+        outlineWidth: 2,
+        // verticalOrigin: Cesium.VerticalOrigin.TOP,
+        pixelOffset: new Cesium.Cartesian2(0, 32),
+      },
+      point: { 
+        pixelSize: 6,
+        color: Cesium.Color.YELLOW 
+      }
     });
 
     // El punto se moverá según se mueva la línea de tiempo de la parte inferior. Para fijar la cámara al punto en movimiento hacemos:
     viewer.trackedEntity = satellitePoint;
+    // viewer.trackedEntity = satelliteEntity;
 
     let initialized = false;
         viewer.scene.globe.tileLoadProgressEvent.addEventListener(() => {
