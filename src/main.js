@@ -2,7 +2,7 @@ const API = 'https://api.tinygs.com/v1';
 const ALLSAT = '/satellites';
 const ONESAT = '/satellite';
 const SatsNames = [];
-
+// let firstTime = true;
 const satellitesData = [
   {
     name: 'PlatziSat-1',
@@ -19,10 +19,26 @@ const satellitesData = [
 const satrec = satellite.twoline2satrec(satellitesData[0].tle1, satellitesData[0].tle2);
 const satName = satellitesData[0].name;
 
-const menuIco = document.querySelector('.menu');
+const menuIco = document.querySelector(".menu");
 const trackID = document.querySelector('#trackID');
 const namesElements = document.getElementById("sateSelec");
 const allButton = document.getElementById("allButton");
+const searchInput = document.getElementById("searchInput")
+const satelliteOptions = document.getElementById("satelliteOptions");
+
+searchInput.addEventListener('input',(event) => {
+  const typedText = event.target.value.trim().toLowerCase();
+  const filteredSatellites = SatsNames.filter(name => name.toLowerCase().includes(typedText));
+  // console.log('Filtered Satellites:', filteredSatellites);
+  // Limpia las opciones previas del datalist
+  satelliteOptions.innerHTML = '';
+  // Agrega las opciones filtradas al datalist
+  filteredSatellites.forEach(name => {
+    const optionElement = document.createElement("option");
+    optionElement.value = name;
+    satelliteOptions.appendChild(optionElement);
+  });
+});
 
 namesElements.addEventListener('change', (event) => {
   const selectedSatelliteName = event.target.value;
@@ -213,7 +229,12 @@ async function loadMap (satrec, nameSat) {
         color: Cesium.Color.YELLOW 
       }
     });
-
+    // if (firstTime) {
+    //   console.log('Primera Vez',firstTime);
+    //   viewer.trackedEntity = satellitePoint;
+    //   firstTime = false;
+    //   console.log('Ahora?',firstTime);
+    // }
     // El punto se moverá según se mueva la línea de tiempo de la parte inferior. Para fijar la cámara al punto en movimiento hacemos:
     viewer.trackedEntity = satellitePoint;
     // viewer.trackedEntity = satelliteEntity;
