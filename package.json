@@ -1,0 +1,19 @@
+{
+  "name": "xtrack",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview"
+  },
+  "devDependencies": {
+    "cesium": "^1.108.0",
+    "vite": "^4.4.8",
+    "vite-plugin-cesium": "^1.2.22"
+  },
+  "dependencies": {
+    "satellite.js": "^5.0.0"
+  }
+}

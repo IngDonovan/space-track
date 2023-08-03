@@ -1,85 +1,15 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
     <link rel="icon" type="image/svg+xml" href="./assets/AntICO.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>X-TRACK</title>
-
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Gruppo&family=Inter:wght@400;600&display=swap"
-      rel="stylesheet"
-    />
-
-    <!-- Include the CesiumJS JavaScript and CSS files -->
-    
-    <link href="https://cesium.com/downloads/cesiumjs/releases/1.98/Build/Cesium/Widgets/widgets.css" rel="stylesheet">
-
-    <link rel="stylesheet" href="./src/styles/main.css" />
+    <title>X-Track</title>
   </head>
   <body>
-    <div id="loading">
-      <h2>Explora el mundo en tiempo real</h2>
-      <p>Loading...</p>
-    </div>
-    <header>
-      <div class="logo">
-        <figure>
-          <img src="./assets/AntICO.svg" alt="" />
-        </figure>
-        <h1>X-TRACK</h1>
-      </div>
-      <figure class="menu">
-        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <path fill-rule="evenodd" clip-rule="evenodd" d="M14.75 1C19.3063 1 23 4.69365 23 9.25C23 13.8063 19.3063 17.5 14.75 17.5C12.7419 17.5 10.9013 16.7825 9.47071 15.59L3.78033 21.2803C3.48744 21.5732 3.01256 21.5732 2.71967 21.2803C2.42678 20.9874 2.42678 20.5126 2.71967 20.2197L8.41005 14.5293C7.21747 13.0987 6.5 11.2581 6.5 9.25C6.5 4.69365 10.1937 1 14.75 1ZM21.5 9.25C21.5 5.52208 18.4779 2.5 14.75 2.5C11.0221 2.5 8 5.52208 8 9.25C8 12.9779 11.0221 16 14.75 16C18.4779 16 21.5 12.9779 21.5 9.25Z" fill="currentColor"/>
-        </svg>
-      </figure>
-    </header>
-    <aside id="trackID" class="trackMenu inactive">
-      <p>Search</p>
-      <div class="container">
-        <input placeholder="Satellite Name" id="searchInput" list="satelliteOptions"/>
-        <datalist id="satelliteOptions"></datalist>
-        <picture id="searchButton">
-          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path fill-rule="evenodd" clip-rule="evenodd" d="M11.7499 4.5C12.1641 4.5 12.4999 4.83579 12.4999 5.25V11H18.25C18.6642 11 19 11.3358 19 11.75C19 12.1642 18.6642 12.5 18.25 12.5H12.4999V18.25C12.4999 18.6642 12.1641 19 11.7499 19C11.3357 19 10.9999 18.6642 10.9999 18.25V12.5H5.25C4.83579 12.5 4.5 12.1642 4.5 11.75C4.5 11.3358 4.83579 11 5.25 11H10.9999V5.25C10.9999 4.83579 11.3357 4.5 11.7499 4.5Z" fill="currentColor"/>
-            </svg>
-        </picture>
-      </div>
-      <p>All</p>
-      <div class="container">
-        <select name="sateSelec" id="sateSelec">
-            <!-- <option>ISS</option>
-            <option>PlatziSat-1</option> -->
-            
-        </select>
-
-      </div>
-      <ul id="ShowlistExist"></ul>
-      <a class="show-button" href="#">
-        <svg width="44" height="44" viewBox="0 0 44 44" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <path d="M37.5564 4.61008C37.0194 4.07311 36.1488 4.07311 35.6118 4.61008C35.0748 5.14705 35.0748 6.01765 35.6118 6.55462C39.0969 10.0397 41.25 14.8503 41.25 20.1664C41.25 25.4826 39.0969 30.2932 35.6118 33.7782C35.0748 34.3152 35.0748 35.1858 35.6118 35.7228C36.1488 36.2598 37.0194 36.2598 37.5564 35.7228C41.5361 31.7431 44 26.2412 44 20.1664C44 14.0917 41.5361 8.58979 37.5564 4.61008Z" fill="currentColor"/>
-          <path d="M8.3882 6.55462C8.92517 6.01765 8.92517 5.14705 8.3882 4.61008C7.85122 4.07311 6.98062 4.07311 6.44365 4.61008C2.46394 8.58979 0 14.0917 0 20.1664C0 26.2412 2.46394 31.7431 6.44365 35.7228C6.98062 36.2598 7.85122 36.2598 8.3882 35.7228C8.92517 35.1858 8.92517 34.3152 8.3882 33.7782C4.90312 30.2932 2.75 25.4826 2.75 20.1664C2.75 14.8503 4.90312 10.0397 8.3882 6.55462Z" fill="currentColor"/>
-          <path d="M14.87 13.0364C15.407 12.4995 15.407 11.6289 14.87 11.0919C14.333 10.5549 13.4624 10.5549 12.9255 11.0919C10.6046 13.4128 9.16667 16.623 9.16667 20.1664C9.16667 23.7099 10.6046 26.9201 12.9255 29.241C13.4624 29.7779 14.333 29.7779 14.87 29.241C15.407 28.704 15.407 27.8334 14.87 27.2964C13.0438 25.4702 11.9167 22.9512 11.9167 20.1664C11.9167 17.3816 13.0438 14.8627 14.87 13.0364Z" fill="currentColor"/>
-          <path d="M31.0745 11.0919C30.5376 10.5549 29.667 10.5549 29.13 11.0919C28.593 11.6289 28.593 12.4995 29.13 13.0364C30.9562 14.8627 32.0833 17.3816 32.0833 20.1664C32.0833 22.9512 30.9562 25.4702 29.13 27.2964C28.593 27.8334 28.593 28.704 29.13 29.241C29.667 29.7779 30.5376 29.7779 31.0745 29.241C33.3954 26.9201 34.8333 23.7099 34.8333 20.1664C34.8333 16.623 33.3954 13.4128 31.0745 11.0919Z" fill="currentColor"/>
-          <path d="M25.6667 20.1667C25.6667 21.7055 24.7188 23.0229 23.375 23.5668V38.9583C23.375 39.7177 22.7594 40.3333 22 40.3333C21.2406 40.3333 20.625 39.7177 20.625 38.9583V23.5668C19.2812 23.0229 18.3333 21.7055 18.3333 20.1667C18.3333 18.1416 19.975 16.5 22 16.5C24.025 16.5 25.6667 18.1416 25.6667 20.1667Z" fill="currentColor"/>
-          </svg>
-        <span class="texts">
-          <span class="text-1">SHOW</span>
-          <span class="text-2">Satellite</span>
-        </span>
-      </a>
-      
-    </aside>
+    
+    <div id="app"></div>
     <div id="cesiumContainer"></div>
-
-
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/satellite.js/5.0.0/satellite.min.js"></script>
-
-    <script src="https://cesium.com/downloads/cesiumjs/releases/1.98/Build/Cesium/Cesium.js"></script>
-
-    <script src="./src/main.js"></script>
+    <script type="module" src="/src/main.js"></script>
   </body>
 </html>
