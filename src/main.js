@@ -45,9 +45,9 @@ searchInput.addEventListener('input',(event) => {
 
 searchButton.addEventListener('click', () => {
   const typedText = searchInput.value;
-  console.log('Send Satellite Search:', typedText);
-  const selectedSatellite = lisToShowSatellites.find(satellite => satellite.name === typedText);
-  if(!selectedSatellite){
+  const selectedSatellite = SatsNames.find(name => name === typedText);
+  if(selectedSatellite){
+    console.log('Send Satellite Search:', typedText);
     searchSat(typedText);
   }
 })
@@ -102,7 +102,7 @@ const searchSatellitesToShow = async () => {
             SatsNames.push(satellite.name);
             const optionElement = document.createElement("option");
             optionElement.textContent = satellite.name;
-            
+
             namesElements.appendChild(optionElement);
         });
 

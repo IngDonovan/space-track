@@ -113,12 +113,14 @@ header{
   text-align: center;
   font-size: 16px;
   border: none;
-  background: transparent;
+  background: #05141B;
 }
+
 .container select {
   background-color: #05141B;
   text-decoration: none;
 }
+
 .container input::placeholder {
   color: rgb(141, 141, 141);
 }
@@ -131,7 +133,7 @@ outline-color: white;
 .container picture{
   display: flex;
   position: absolute;
-  right: 10px;
+  left: 10px;
   cursor: pointer;
 }
 .container picture svg {
