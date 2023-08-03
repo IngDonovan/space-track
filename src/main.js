@@ -155,10 +155,11 @@ async function loadAllSatellites() {
   }
 }
 
-// -----------------------------------
+// -----------------------------------fromWorldTerrain()
 //inicializamos el visor. Aquí pasamos algunas opciones adicionales para deshabilitar la funcionalidad que requiere un token de acceso:
 const viewer = new Cesium.Viewer('cesiumContainer', {
   imageryProvider: new Cesium.TileMapServiceImageryProvider({
+    // terrain: Cesium.Terrain.fromWorldTerrain(),
     url: Cesium.buildModuleUrl("Assets/Textures/NaturalEarthII"),
   }),
   baseLayerPicker: false, 
@@ -223,11 +224,6 @@ async function loadMap (satrec, nameSat) {
     // Por último, pasamos este objeto positionsOverTime a nuestro punto
     const satellitePoint = viewer.entities.add({
       position: positionsOverTime,
-      billboard: {
-        image: '../assets/FP_Satellite_icon.png',
-        width: 64,
-        height: 64,
-      },
       label: {
         text: nameSat,
         font: "14pt monospace",
@@ -241,6 +237,14 @@ async function loadMap (satrec, nameSat) {
         color: Cesium.Color.YELLOW 
       }
     });
+    const satelliteImg = viewer.entities.add({
+      position: Cesium.Cartesian3.fromDegrees(-75.59777, 40.03883),
+    billboard: {
+      image: "../assets/FP_Satellite_icon.png",
+      sizeInMeters: true,
+    },
+      
+    });
     // if (firstTime) {
     //   console.log('Primera Vez',firstTime);
     //   viewer.trackedEntity = satellitePoint;
@@ -248,8 +252,8 @@ async function loadMap (satrec, nameSat) {
     //   console.log('Ahora?',firstTime);
     // }
     // El punto se moverá según se mueva la línea de tiempo de la parte inferior. Para fijar la cámara al punto en movimiento hacemos:
+    
     viewer.trackedEntity = satellitePoint;
-    // viewer.trackedEntity = satelliteEntity;
 
     let initialized = false;
     viewer.scene.globe.tileLoadProgressEvent.addEventListener(() => {
