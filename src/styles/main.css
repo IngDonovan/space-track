@@ -66,12 +66,13 @@ header{
 }
 .trackMenu{
   width: 100vw;
-  height: 360px;
+  height: auto;
+  max-height: 542px;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: flex-start;
-  gap: 16px;
+  padding-bottom: 32px;
   border-radius: 0 0 12px 12px;
   position: fixed;
   top: 50px;
@@ -83,7 +84,6 @@ header{
   display: none;
 }
 
-
 .trackMenu p{
   align-self: flex-start;
   padding-left: 16px;
@@ -93,7 +93,6 @@ header{
 }
 
 .trackMenu .container {
-
   display: flex;
   position: relative;
   justify-content: center;
@@ -116,27 +115,79 @@ header{
   border: none;
   background: transparent;
 }
-.container select{
+.container select {
   background-color: #05141B;
   text-decoration: none;
 }
 .container input::placeholder {
   color: rgb(141, 141, 141);
 }
+.container select:focus{
+  outline-color: white;
+}
 .container input:focus {
 outline-color: white;
 }
 .container picture{
-  width: 33px;
+  display: flex;
   position: absolute;
   right: 10px;
   cursor: pointer;
+}
+.container picture svg {
+  width: 33px;
+  height: 33px;
 }
 .container picture path{
   transition: fill 0.3s ease;
 }
 .container picture:hover path{
   fill: #F19D59;
+}
+
+#ShowlistExist{
+  display: flex;
+  flex-direction: column-reverse;
+
+}
+
+.show-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 16px;
+  border: 2px solid #F19D59;
+  border-radius: 12px;
+  background-color: #FFFFFF;
+  padding: 0.625rem 1.5rem;
+  text-align: center;
+  color: #000000;
+  outline: 0;
+  transition: all  .2s ease;
+  text-decoration: none;
+}
+.show-button:hover {
+  background-color: #F19D59;
+  color: #FFFFFF;
+}
+.icon {
+  height: 1.5rem;
+  width: 1.5rem;
+}
+.texts {
+  margin-left: 1rem;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  line-height: 1;
+}
+.text-1 {
+  margin-bottom: 0.25rem;
+  font-size: 0.75rem;
+  line-height: 1rem;
+}
+.text-2 {
+  font-weight: 600;
 }
 
 @media (min-width: 481px) {

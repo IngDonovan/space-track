@@ -3,34 +3,36 @@ const ALLSAT = '/satellites';
 const ONESAT = '/satellite';
 const SatsNames = [];
 // let firstTime = true;
-const satellitesData = [
+const lisToShowSatellites = [
   {
-    name: 'PlatziSat-1',
+    name: 'FossaSat-FX14',
     tle1: '1 88888U 24001FA  23163.94096086  .00000000  00000-0  10000-4 0  9999',
     tle2: '2 88888  97.5077 280.5424 0008220 228.6198 130.8530 15.11803180  1009',
   },
-  {
-    name: 'ISS',
-    tle1: '1 25544U 98067A   08264.51782528 -.00002182  00000-0 -11606-4 0  2927',
-    tle2: '2 25544  51.6416 247.4627 0006703 130.5360 325.0288 15.72125391563537',
-  },
+  // {
+  //   name: 'ISS',
+  //   tle1: '1 25544U 98067A   08264.51782528 -.00002182  00000-0 -11606-4 0  2927',
+  //   tle2: '2 25544  51.6416 247.4627 0006703 130.5360 325.0288 15.72125391563537',
+  // },
   // ... Add more satellites here
 ];
-const satrec = satellite.twoline2satrec(satellitesData[0].tle1, satellitesData[0].tle2);
-const satName = satellitesData[0].name;
+
+const satrec = satellite.twoline2satrec(lisToShowSatellites[0].tle1, lisToShowSatellites[0].tle2);
+const satName = lisToShowSatellites[0].name;
 
 const menuIco = document.querySelector(".menu");
 const trackID = document.querySelector('#trackID');
 const namesElements = document.getElementById("sateSelec");
-const allButton = document.getElementById("allButton");
+
 const searchInput = document.getElementById("searchInput")
 const satelliteOptions = document.getElementById("satelliteOptions");
 const searchButton = document.getElementById("searchButton");
+const ulList = document.getElementById('ShowlistExist');
+const showButton = document.querySelector(".show-button");
 
 searchInput.addEventListener('input',(event) => {
   const typedText = event.target.value.trim().toLowerCase();
   const filteredSatellites = SatsNames.filter(name => name.toLowerCase().includes(typedText));
-  // console.log('Filtered Satellites:', filteredSatellites);
   // Limpia las opciones previas del datalist
   satelliteOptions.innerHTML = '';
   // Agrega las opciones filtradas al datalist
@@ -44,47 +46,45 @@ searchInput.addEventListener('input',(event) => {
 searchButton.addEventListener('click', () => {
   const typedText = searchInput.value;
   console.log('Send Satellite Search:', typedText);
-  const selectedSatellite = satellitesData.find(satellite => satellite.name === typedText);
-  const platziName =  satellitesData.find(satellite => 'FossaSat-FX14' === typedText);
-  if (!selectedSatellite && !platziName){
+  const selectedSatellite = lisToShowSatellites.find(satellite => satellite.name === typedText);
+  if(!selectedSatellite){
     searchSat(typedText);
-  } else {
-    console.log('ya está grabado');
   }
 })
-
+//lee los cambios del elemento namesElement
 namesElements.addEventListener('change', (event) => {
-  const selectedSatelliteName = event.target.value;
-  console.log('Selected Satellite:', selectedSatelliteName);
+  let selectedSatelliteName = event.target.value;
+  console.log('Selected and search Satellite:', selectedSatelliteName);
+  searchSat(selectedSatelliteName);
 });
 
-allButton.addEventListener('click', () => {
-  const selectedSatelliteName = namesElements.value;
-  console.log('Send Satellite All:', selectedSatelliteName);
-  // Buscar el satélite en el array satellitesData
-  const selectedSatellite = satellitesData.find(satellite => satellite.name === selectedSatelliteName);
-  const platziName =  satellitesData.find(satellite => 'FossaSat-FX14' === selectedSatelliteName);
-  if (!selectedSatellite && !platziName){
-    searchSat(selectedSatelliteName);
-  } else {
-    console.log('ya está grabado');
-  }
-})
+function addListSatellites() {
+  ulList.innerHTML = '';
+  lisToShowSatellites.forEach(satellite => {
+    const newLiElement = document.createElement('li');
+    newLiElement.textContent = satellite.name;
+    ulList.appendChild(newLiElement);
+  });
+}
+showButton.addEventListener('click', () => {
+  loadAllSatellites();
+});
+
 
 menuIco.addEventListener('click', toggleMenu);
 //open and close de menu && fetch Satellites names
 function toggleMenu(){
   const isAsideClose = trackID.classList.contains('inactive');
   // console.log(isAsideClose);
-  if (isAsideClose && (SatsNames == 0)) {
-    searchSatellitesToShow();
-    // console.log('Satellites Names',SatsNames); 
+  if (isAsideClose) {
+    addListSatellites();
+    if (SatsNames == 0) {
+      searchSatellitesToShow();
+      // console.log('Satellites Names',SatsNames); 
+    }
   }
   trackID.classList.toggle('inactive');
-  if (!isAsideClose) {
-    console.log('Cargando Nuevo');
-    loadAllSatellites();
-  }
+
 }
 
 async function fetchData(urlApi) {
@@ -114,38 +114,37 @@ const searchSatellitesToShow = async () => {
 async function searchSat(nameSat) {
     try {
         const orbSat = await fetchData(`${API + ONESAT}/${nameSat}`);
+        
+        const existSatelliteIndex = lisToShowSatellites.findIndex(satellite => satellite.name === nameSat);
 
-        console.log('Tle',orbSat.tle[0]);
-        console.log('Tle',orbSat.tle[1]);
-        console.log('Tle',orbSat.tle[2]);
+        if (existSatelliteIndex === -1) {
+          // Si el satélite no existe en la lista, lo agregamos
+          lisToShowSatellites.push({
+            name: nameSat,
+            tle1: orbSat.tle[1],
+            tle2: orbSat.tle[2],
+          });
+        } else {
+          // Si el satélite ya existe en la lista, lo eliminamos y luego lo agregamos nuevamente
+          lisToShowSatellites.splice(existSatelliteIndex, 1); // Eliminamos el satélite existente
+          lisToShowSatellites.push({ // Agregamos el satélite actualizado
+            name: nameSat,
+            tle1: orbSat.tle[1],
+            tle2: orbSat.tle[2],
+          });
+        }
 
-        satellitesData.push({
-          name: nameSat,
-          tle1: orbSat.tle[1],
-          tle2: orbSat.tle[2],
-        });
+        console.log(lisToShowSatellites);
+        addListSatellites();
 
     } catch (error) {
         console.error(error);
     }
 }
 
-// const searchAllSatellites = async () => {
-//   try {
-//     for (const name of satelliteNames) {
-//       const orbSat = await fetchData(`${API + ONESAT}/${name}`);
-//       satellitesData.push({ name: orbSat.name, tle: [orbSat.tle[0], orbSat.tle[1]] });
-//     }
-//     // Una vez que se hayan obtenido los TLE de todos los satélites, cargamos el mapa.
-//     loadMap();
-//   } catch (error) {
-//     console.error(error);
-//   }
-// };//revew-------------------
-
 async function loadAllSatellites() {
   try {
-    for (const sat of satellitesData) {
+    for (const sat of lisToShowSatellites) {
       const nameSat = sat.name;
       const satrec = satellite.twoline2satrec(sat.tle1, sat.tle2);
       loadMap(satrec, nameSat);
@@ -171,7 +170,6 @@ const viewer = new Cesium.Viewer('cesiumContainer', {
 });
 viewer.scene.globe.enableLighting = true;
 // -------------------------------------------------
-
 
 async function loadMap (satrec, nameSat) {
 
@@ -209,61 +207,53 @@ async function loadMap (satrec, nameSat) {
     positionsOverTime.addSample(time, position);
   }
 
-    //-----------------
-    // const satelliteEntity = new Cesium.Entity({
-    //   position: positionsOverTime,
-    // });
-    // // Si usas un archivo PNG como ícono
-    // satelliteEntity.billboard = new Cesium.BillboardGraphics({
-    //   image: '../assets/SatellitePlatzi.png',
-    //   width: 30,
-    //   height: 30,
-    // });
+  // Por último, pasamos este objeto positionsOverTime a nuestro punto
+  const platziName = ('FossaSat-FX14' === nameSat);
 
-
-    // Por último, pasamos este objeto positionsOverTime a nuestro punto
-    const satellitePoint = viewer.entities.add({
-      position: positionsOverTime,
-      label: {
-        text: nameSat,
-        font: "14pt monospace",
-        style: Cesium.LabelStyle.FILL_AND_OUTLINE,
-        outlineWidth: 2,
-        //verticalOrigin: Cesium.VerticalOrigin.TOP,
-        pixelOffset: new Cesium.Cartesian2(0, 32),
-      },
-      point: { 
-        pixelSize: 6,
-        color: Cesium.Color.YELLOW 
-      }
-    });
-    const satelliteImg = viewer.entities.add({
-      position: Cesium.Cartesian3.fromDegrees(-75.59777, 40.03883),
-    billboard: {
-      image: "../assets/FP_Satellite_icon.png",
-      sizeInMeters: true,
+  let newName;
+  if (!platziName) {
+    newName = nameSat;
+    colorSat = Cesium.Color.YELLOW;
+  } else {
+    newName = 'PlatziSat-1';
+    colorSat = Cesium.Color.RED;
+  }
+  const satellitePoint = viewer.entities.add({
+    position: positionsOverTime,
+    label: {
+      text: newName,
+      font: "14pt monospace",
+      style: Cesium.LabelStyle.FILL_AND_OUTLINE,
+      outlineWidth: 2,
+      //verticalOrigin: Cesium.VerticalOrigin.TOP,
+      pixelOffset: new Cesium.Cartesian2(0, 32),
     },
-      
-    });
-    // if (firstTime) {
-    //   console.log('Primera Vez',firstTime);
-    //   viewer.trackedEntity = satellitePoint;
-    //   firstTime = false;
-    //   console.log('Ahora?',firstTime);
-    // }
+    point: { 
+      pixelSize: 6,
+      color: colorSat 
+    }
+  });
+    // const satelliteImg = viewer.entities.add({
+    //   position: Cesium.Cartesian3.fromDegrees(-75.59777, 40.03883),
+    // billboard: {
+    //   image: "../assets/FP_Satellite_icon.png",
+    //   sizeInMeters: true,
+    // },
+    // });
+ 
     // El punto se moverá según se mueva la línea de tiempo de la parte inferior. Para fijar la cámara al punto en movimiento hacemos:
     
-    viewer.trackedEntity = satellitePoint;
+  viewer.trackedEntity = satellitePoint;
 
-    let initialized = false;
-    viewer.scene.globe.tileLoadProgressEvent.addEventListener(() => {
-      if (!initialized && viewer.scene.globe.tilesLoaded === true) {
-        viewer.clock.shouldAnimate = true;
-        initialized = true;
-        viewer.scene.camera.zoomOut(7000000);
-        document.querySelector("#loading").classList.toggle('disappear', true)
-      }
-    });
+  let initialized = false;
+  viewer.scene.globe.tileLoadProgressEvent.addEventListener(() => {
+    if (!initialized && viewer.scene.globe.tilesLoaded === true) {
+      viewer.clock.shouldAnimate = true;
+      initialized = true;
+      viewer.scene.camera.zoomOut(7000000);
+      document.querySelector("#loading").classList.toggle('disappear', true)
+    }
+  });
         
 }
 
