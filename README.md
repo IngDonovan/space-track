@@ -86,9 +86,9 @@ This project is licensed under the MIT License - see the LICENSE file for detail
 Special thanks to #Platzi and -------.
 
 ## Authors
-Donovan Rojas Mendoza - rojasdrm03@gmail.com
-Luis Alejando Villalba Diaz - luisvillalbaa.12@gmail.com
-Percy Tejada - percytejada.code@gmail.com
++ Donovan Rojas Mendoza - rojasdrm03@gmail.com
++ Luis Alejando Villalba Diaz - luisvillalbaa.12@gmail.com
++ Percy Tejada - percytejada.code@gmail.com
 
 Thank you for your interest in this project! If you have any questions or suggestions, feel free to contact me.
 
