@@ -11,28 +11,28 @@ body {
   height: 100%;
   z-index: 1;
 }
-#loading {
-  width: 100%;
-  height: 100%;
-  background: #000;
-  opacity: 0.8;
-  position: fixed;
-  top:0;
-  left: 0;
-  z-index: 3;
-  color: white;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  transition: opacity 0.5s, visibility 0.5s;
-  visibility: visible;
-}
+// #loading {
+//   width: 100%;
+//   height: 100%;
+//   background: #000;
+//   opacity: 0.8;
+//   position: fixed;
+//   top:0;
+//   left: 0;
+//   z-index: 3;
+//   color: white;
+//   display: flex;
+//   flex-direction: column;
+//   align-items: center;
+//   justify-content: center;
+//   transition: opacity 0.5s, visibility 0.5s;
+//   visibility: visible;
+// }
 
-.disappear {
-  opacity: 0!important;
-  visibility: hidden!important;
-}
+// .disappear {
+//   opacity: 0!important;
+//   visibility: hidden!important;
+// }
 
 header{
   width: 100vw;

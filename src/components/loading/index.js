@@ -1,4 +1,4 @@
-
+import './loading.scss';
 
 export const loadingView = `
     <div id="loading">

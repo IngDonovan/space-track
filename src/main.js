@@ -27,10 +27,6 @@ const lisToShowSatellites = [
 const satrec = satellite.twoline2satrec(lisToShowSatellites[0].tle1, lisToShowSatellites[0].tle2);
 const satName = lisToShowSatellites[0].name;
 
-{/* <div id="loading">
-        <h2>Explora el mundo en tiempo real</h2>
-        <p>Loading...</p>
-    </div> */}
 // ---------------------
 document.querySelector('#app').innerHTML = `
     ${loadingView}
