@@ -225,11 +225,18 @@ function loadMap (satrec, nameSat) {
     }
     const satellitePoint = viewer.entities.add({
       position: positionsOverTime,
+      billboard: {
+        image: "../assets/SatelliteVertical.svg",
+        width: 64,
+        height: 64,
+      },
       label: {
         text: newName,
-        font: "14pt monospace",
+        backgroundColor:Cesium.Color.WHITE,
+        fillColor:Cesium.Color.WHITE,
+        font: "small-caps bold 24px/1 sans-serif",
         style: Cesium.LabelStyle.FILL_AND_OUTLINE,
-        outlineWidth: 2,
+        outlineWidth: 3,
         //verticalOrigin: Cesium.VerticalOrigin.TOP,
         pixelOffset: new Cesium.Cartesian2(0, 32),
       },
