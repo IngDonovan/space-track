@@ -36,10 +36,6 @@ document.querySelector('#app').innerHTML = `
     ${menuBarView}
 `;
 
-// -------------
-
-
-
 const menuIco = document.querySelector(".menu");
 const trackID = document.querySelector('#trackID');
 const namesElements = document.getElementById("sateSelec");
