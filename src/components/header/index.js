@@ -1,3 +1,5 @@
+import './header.scss';
+
 
 export const headerView =`
 <header>

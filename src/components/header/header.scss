@@ -1,0 +1,31 @@
+header{
+    width: 100vw;
+    height: 10vh;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: var(--linear-background, linear-gradient(180deg, #05141B 30%, rgba(0, 0, 0, 0.00) 100%));
+    color: white;
+    position: fixed;
+    top:0;
+    z-index: 2;
+  }
+  .logo{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+  }
+  .menu {
+    cursor: pointer;
+  }
+  .menu svg{
+    width: 28px;
+    height: 28px;
+    
+  }
+  .menu path{
+    transition: fill 0.3s ease;
+  }
+  .menu:hover path{
+    fill: #F19D59;
+  }
