@@ -1,4 +1,5 @@
-import './main.css';
+import './main.scss';
+import { loadingView } from './components/loading';
 // import './components/satellite';
 // import './components/wordMap';
 import * as Cesium from 'cesium';
@@ -26,12 +27,13 @@ const lisToShowSatellites = [
 const satrec = satellite.twoline2satrec(lisToShowSatellites[0].tle1, lisToShowSatellites[0].tle2);
 const satName = lisToShowSatellites[0].name;
 
-// ---------------------
-document.querySelector('#app').innerHTML = `
-    <div id="loading">
+{/* <div id="loading">
         <h2>Explora el mundo en tiempo real</h2>
         <p>Loading...</p>
-    </div>
+    </div> */}
+// ---------------------
+document.querySelector('#app').innerHTML = `
+    ${loadingView}
     <header>
     <div class="logo">
       <figure>
