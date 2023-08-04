@@ -1,6 +1,5 @@
 import './menuBar.scss';
 
-
 export const menuBarView =`
 <aside id="trackID" class="trackMenu inactive">
     <p>Search</p>
