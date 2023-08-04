@@ -237,7 +237,6 @@ function loadMap (satrec, nameSat) {
         font: "small-caps bold 24px/1 sans-serif",
         style: Cesium.LabelStyle.FILL_AND_OUTLINE,
         outlineWidth: 3,
-        //verticalOrigin: Cesium.VerticalOrigin.TOP,
         pixelOffset: new Cesium.Cartesian2(0, 32),
       },
       point: { 
