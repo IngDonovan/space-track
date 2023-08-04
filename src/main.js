@@ -222,7 +222,8 @@ function loadMap (satrec, nameSat) {
     const satellitePoint = viewer.entities.add({
       position: positionsOverTime,
       billboard: {
-        image: "../public/SatPLATZ.svg",
+        show:true,
+        image: "/SateVertic.png",
         width: 64,
         height: 64,
       },
@@ -235,10 +236,10 @@ function loadMap (satrec, nameSat) {
         outlineWidth: 3,
         pixelOffset: new Cesium.Cartesian2(0, 32),
       },
-      // point: { 
-      //   pixelSize: 6,
-      //   color: colorSat 
-      // }
+      point: { 
+        pixelSize: 6,
+        color: colorSat 
+      }
     });
 
     viewer.trackedEntity = satellitePoint;
