@@ -6,10 +6,22 @@
   "scripts": {
     "dev": "vite",
     "build": "vite build",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "deploy": "vite build && gh-pages -d dist",
+    "predeploy": "rm -rf dist"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/IngDonovan/space-track.git"
+  },
+  "author": "Ing Donovan <rojasdrm03@gmail.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/IngDonovan/space-track/issues"
   },
   "devDependencies": {
     "cesium": "^1.108.0",
+    "gh-pages": "^5.0.0",
     "vite": "^4.4.8",
     "vite-plugin-cesium": "^1.2.22"
   },
