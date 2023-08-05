@@ -36,9 +36,9 @@ document.querySelector('#app').innerHTML = `
     ${menuBarView}
     <div id="cesiumClockInfo">
       <span id="cesiumTime"></span> 
-      <span class="timeSat">00</span>:
-      <span class="timeSat">00</span>:
-      <span class="timeSat">00</span> 
+      <span id="hourElement" class="timeSat">00</span>:
+      <span id="minuteElement" class="timeSat">00</span>:
+      <span id="secElement" class="timeSat">00</span> 
     
     </div>
 `;
@@ -180,6 +180,9 @@ async function loadAllSatellites() {
 // Obtén una referencia al elemento de información del reloj
 const cesiumClockInfoElement = document.getElementById('cesiumClockInfo');
 const cesiumTimeElement = document.getElementById('cesiumTime');
+const hourElement = document.getElementById('hourElement');
+const minuteElement = document.getElementById('minuteElement');
+const secElement = document.getElementById('secElement');
 
 // Actualiza la información del reloj personalizado
 function updateCesiumClockInfo() {
@@ -188,8 +191,13 @@ function updateCesiumClockInfo() {
   const hours = currentTime.getHours();
   const minutes = currentTime.getMinutes();
   const seconds = currentTime.getSeconds();
-  const formattedTime = `${hours}:${minutes}:${seconds}`;
-  cesiumTimeElement.textContent = formattedTime;
+  const formatHours = `${hours}`
+  const formatMinutes = `${minutes}`
+  const formatSeconds = `${seconds}`
+  hourElement.textContent = formatHours;
+  minuteElement.textContent = formatMinutes;
+  secElement.textContent = formatSeconds;
+  
 }
 
 
