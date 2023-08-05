@@ -1,11 +1,11 @@
-import './main.scss';
+import * as Cesium from 'cesium';
+import * as satellite from 'satellite.js';
 import { loadingView } from './components/loading';
 import { headerView } from './components/header';
 import { menuBarView } from './components/menuBar';
-// import './components/satellite';
-// import './components/wordMap';
-import * as Cesium from 'cesium';
-import * as satellite from 'satellite.js';
+import sateOrbi from './assets/SatPLATZ.svg';
+import './main.scss';
+
 
 const API = 'https://api.tinygs.com/v1';
 const ALLSAT = '/satellites';
@@ -232,7 +232,7 @@ function loadMap (satrec, nameSat) {
     const satellitePoint = viewer.entities.add({
       position: positionsOverTime,
       billboard: {
-        image: "/SateVertic.png",
+        image: sateOrbi,
         show:true,
         width: 64,
         height: 64,
