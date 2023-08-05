@@ -170,7 +170,17 @@ async function loadAllSatellites() {
   }
 }
 
-const viewer = new Cesium.Viewer('cesiumContainer');
+const viewer = new Cesium.Viewer('cesiumContainer',{
+
+// Hide the base layer picker
+  baseLayerPicker: false, 
+  geocoder: false, 
+  homeButton: false, 
+  infoBox: false,
+  navigationHelpButton: false, 
+  sceneModePicker: false
+});
+viewer.scene.globe.enableLighting = true;
 // console.log(lisToShowSatellites);
 // console.log(API);
 
@@ -222,8 +232,8 @@ function loadMap (satrec, nameSat) {
     const satellitePoint = viewer.entities.add({
       position: positionsOverTime,
       billboard: {
-        show:true,
         image: "/SateVertic.png",
+        show:true,
         width: 64,
         height: 64,
       },
