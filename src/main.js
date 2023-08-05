@@ -178,7 +178,9 @@ const viewer = new Cesium.Viewer('cesiumContainer',{
   homeButton: false, 
   infoBox: false,
   navigationHelpButton: false, 
-  sceneModePicker: false
+  sceneModePicker: false,
+  // timeline: false, // Agrega esta línea para ocultar la barra de tiempo
+  animation: false, // Agrega esta línea para ocultar los controles de animación
 });
 viewer.scene.globe.enableLighting = true;
 // console.log(lisToShowSatellites);
@@ -260,9 +262,11 @@ function loadMap (satrec, nameSat) {
         viewer.clock.shouldAnimate = true;
         initialized = true;
         viewer.scene.camera.zoomOut(7000000);
-        document.querySelector("#loading").classList.toggle('disappear', true)
+        document.querySelector("#loading").classList.toggle('disappear', true);
+        
       }
     });
+    
           
   }
   loadMap(satrec,satName);

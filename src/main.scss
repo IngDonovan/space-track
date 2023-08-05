@@ -12,3 +12,10 @@ body {
   z-index: 1;
 }
 
+/* Ocultar la barra inferior*/
+.cesium-viewer-timelineContainer,
+.cesium-viewer-animationContainer,
+.cesium-viewer-bottom,
+.cesium-viewer-fullscreenContainer {
+  display: none !important;
+}
