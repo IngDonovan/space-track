@@ -3,7 +3,7 @@ import * as satellite from 'satellite.js';
 import { loadingView } from './components/loading';
 import { headerView } from './components/header';
 import { menuBarView } from './components/menuBar';
-import sateOrbi from './assets/SatPLATZ.svg';
+import sateOrbi from './assets/Satellite.svg';
 import './main.scss';
 
 

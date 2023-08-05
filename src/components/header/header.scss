@@ -18,14 +18,14 @@ header{
   .menu {
     cursor: pointer;
   }
-  .menu svg{
-    width: 28px;
-    height: 28px;
+  .menu  svg{
+    width: 35px;
+    height: 35px;
     
   }
   .menu path{
     transition: fill 0.3s ease;
   }
   .menu:hover path{
-    fill: #F19D59;
+    stroke: #F19D59;
   }
