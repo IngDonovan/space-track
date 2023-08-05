@@ -34,6 +34,13 @@ document.querySelector('#app').innerHTML = `
     ${loadingView}
     ${headerView}
     ${menuBarView}
+    <div id="cesiumClockInfo">
+      <span id="cesiumTime"></span> 
+      <span class="timeSat">00</span>:
+      <span class="timeSat">00</span>:
+      <span class="timeSat">00</span> 
+    
+    </div>
 `;
 
 const menuIco = document.querySelector(".menu");
@@ -169,7 +176,28 @@ async function loadAllSatellites() {
     console.error(error);
   }
 }
+// /////////////////
+// Obtén una referencia al elemento de información del reloj
+const cesiumClockInfoElement = document.getElementById('cesiumClockInfo');
+const cesiumTimeElement = document.getElementById('cesiumTime');
+
+// Actualiza la información del reloj personalizado
+function updateCesiumClockInfo() {
+  const cesiumClock = viewer.clock;
+  const currentTime = Cesium.JulianDate.toDate(cesiumClock.currentTime);
+  const hours = currentTime.getHours();
+  const minutes = currentTime.getMinutes();
+  const seconds = currentTime.getSeconds();
+  const formattedTime = `${hours}:${minutes}:${seconds}`;
+  cesiumTimeElement.textContent = formattedTime;
+}
+
+
+// Actualiza la información del reloj personalizado cada segundo
+setInterval(updateCesiumClockInfo, 1000);
+
 Cesium.Ion.defaultAccessToken = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJqdGkiOiI5ZjIyZTdiZi1mODQwLTQ0MjAtOWNlNS1lYTViMDc2OTlmYmQiLCJpZCI6MTU4MTU2LCJpYXQiOjE2OTEwMjQxMTl9.7otDjsYgAlZeullEThcZ8fKanHGXv0Lo2jAn6po1u3E';
+
 const viewer = new Cesium.Viewer('cesiumContainer',{
 
 // Hide the base layer picker
@@ -189,34 +217,43 @@ viewer.scene.globe.enableLighting = true;
 
 function loadMap (satrec, nameSat) {
 
-    const date = new Date();
-    const positionAndVelocity = satellite.propagate(satrec, date);
-    const gmst = satellite.gstime(date);
-    const position = satellite.eciToGeodetic(positionAndVelocity.position, gmst);
+    // const date = new Date();
+    // const positionAndVelocity = satellite.propagate(satrec, date);
+    // const gmst = satellite.gstime(date);
+    // const position = satellite.eciToGeodetic(positionAndVelocity.position, gmst);
   
     const totalSeconds = 60 * 60 * 6;
     const timestepInSeconds = 10;
     const start = Cesium.JulianDate.fromDate(new Date());
     const stop = Cesium.JulianDate.addSeconds(start, totalSeconds, new Cesium.JulianDate());
+
     viewer.clock.startTime = start.clone();
     viewer.clock.stopTime = stop.clone();
     viewer.clock.currentTime = start.clone();
     viewer.timeline.zoomTo(start, stop);
-    viewer.clock.multiplier = 40;
+    viewer.clock.multiplier = 1;
     viewer.clock.clockRange = Cesium.ClockRange.LOOP_STOP;
-  
+    
+    // ------------
+
+    // 
+    
+    
     const positionsOverTime = new Cesium.SampledPositionProperty();
+   
   
     for (let i = 0; i < totalSeconds; i+= timestepInSeconds) {
       const time = Cesium.JulianDate.addSeconds(start, i, new Cesium.JulianDate());
+      // console.log(time);
       const jsDate = Cesium.JulianDate.toDate(time);
-  
+      // console.log(jsDate);
       const positionAndVelocity = satellite.propagate(satrec, jsDate);
       const gmst = satellite.gstime(jsDate);
       const p   = satellite.eciToGeodetic(positionAndVelocity.position, gmst);
       // ...Get position from satellite-js...
       const position = Cesium.Cartesian3.fromRadians(p.longitude, p.latitude, p.height * 1000);
       positionsOverTime.addSample(time, position);
+      // console.log(position);
     }
   
     // Por último, pasamos este objeto positionsOverTime a nuestro punto
@@ -231,6 +268,7 @@ function loadMap (satrec, nameSat) {
       newName = 'PlatziSat-1';
       colorSat = Cesium.Color.RED;
     }
+    
     const satellitePoint = viewer.entities.add({
       position: positionsOverTime,
       billboard: {
