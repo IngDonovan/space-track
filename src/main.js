@@ -169,7 +169,7 @@ async function loadAllSatellites() {
     console.error(error);
   }
 }
-
+Cesium.Ion.defaultAccessToken = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJqdGkiOiI5ZjIyZTdiZi1mODQwLTQ0MjAtOWNlNS1lYTViMDc2OTlmYmQiLCJpZCI6MTU4MTU2LCJpYXQiOjE2OTEwMjQxMTl9.7otDjsYgAlZeullEThcZ8fKanHGXv0Lo2jAn6po1u3E';
 const viewer = new Cesium.Viewer('cesiumContainer',{
 
 // Hide the base layer picker
