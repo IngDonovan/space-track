@@ -21,14 +21,15 @@ body {
 }
 
 #cesiumClockInfo {
-  width: 100vw;
+  width: auto;
   display: flex;
   align-items: center;
   justify-content: center;
   gap: 5px;
   position: fixed;
   bottom: 0px;
-  padding-bottom: 16px;
+  padding: 16px;
+  border-radius: 12px;
   color: white;
   font-size: 30px;
   z-index: 2;
