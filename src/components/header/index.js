@@ -1,11 +1,12 @@
 import './header.scss';
+import logoHeader from '../../assets/AntICO.svg';
 
 
 export const headerView =`
 <header>
     <div class="logo">
         <figure>
-        <img src="./assets/AntICO.svg" alt="" />
+        <img src="${logoHeader}" alt="" />
         </figure>
         <h1>X-TRACK</h1>
     </div>
