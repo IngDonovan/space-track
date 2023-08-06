@@ -21,6 +21,11 @@ export function initApp() {
         <span id="minuteElement" class="timeSat">00</span>:
         <span id="secElement" class="timeSat">00</span> 
       </div>
+      <div class="infoSatellite">
+        <span id="LatSat" class="infoData">Grados</span>
+        <span id="LongSat" class="infoData">Grados</span>
+        <span id="heightSat" class="infoData">Km</span> 
+      </div>
     `;
 
     // Get the menu icon element (make sure it's defined in your HTML)
@@ -62,3 +67,4 @@ export function initApp() {
     }
     trackID.classList.toggle('inactive');
   }
+

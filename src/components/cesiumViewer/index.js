@@ -50,10 +50,14 @@ export class CesiumViewer {
 
   loadMap(satrec, nameSat) {
     const viewer = this.viewer;
+
+    const orbitPositions = [];
+
     const totalSeconds = 60 * 60 * 6;
-    const timestepInSeconds = 10;
+    const timestepInSeconds = 10;//10
     const start = Cesium.JulianDate.fromDate(new Date());
     const stop = Cesium.JulianDate.addSeconds(start, totalSeconds, new Cesium.JulianDate());
+
 
     viewer.clock.startTime = start.clone();
     viewer.clock.stopTime = stop.clone();
@@ -71,12 +75,17 @@ export class CesiumViewer {
       const gmst = satellite.gstime(jsDate);
       const p = satellite.eciToGeodetic(positionAndVelocity.position, gmst);
       const position = Cesium.Cartesian3.fromRadians(p.longitude, p.latitude, p.height * 1000);
+      orbitPositions.push({
+        timeSat:time,
+        positionSat:position,
+      });
       positionsOverTime.addSample(time, position);
+      // console.log(time);
+      // console.log(position);
     }
-
+    console.log(orbitPositions);
     const platziName = ('FossaSat-FX14' === nameSat);
     const newName = platziName ? 'PlatziSat-1' : nameSat;
-
     const satellitePoint = viewer.entities.add({
       position: positionsOverTime,
       billboard: {
@@ -100,7 +109,30 @@ export class CesiumViewer {
       },
     });
 
+    // const firstPosition = orbitPositions[0].positionSat;
+    // const lastPosition = orbitPositions[100].positionSat;
+
+    // const lastPosition = orbitPositions[orbitPositions.length - 1].positionSat;
+
+    // const entity = viewer.entities.add({
+    //   polyline: {
+    //     positions: [firstPosition, lastPosition],
+    //     width: 2,
+    //     material: new Cesium.PolylineGlowMaterialProperty({
+    //       glowPower: 0.1,
+    //       color: Cesium.Color.YELLOW,
+    //     }),
+    //   },
+    // });
+    
+    // this.createOrbitPath(satrec, orbitPositions);
+    
+
+
     viewer.trackedEntity = satellitePoint;
+    // viewer.trackedEntity = entity;
+
+    // Show orbit path
 
     let initialized = false;
     viewer.scene.globe.tileLoadProgressEvent.addEventListener(() => {
@@ -109,9 +141,47 @@ export class CesiumViewer {
         initialized = true;
         viewer.scene.camera.zoomOut(7000000);
         document.querySelector("#loading").classList.toggle('disappear', true);
-        
+
       }
     });
+  }
+
+  createOrbitPath(satrec, positions) {
+    const viewer = this.viewer;
+  
+    let currentIndex = 0;
+    let timeInterval = 1000; // Tiempo en milisegundos entre actualizaciones
+    let lastUpdateTime = Cesium.JulianDate.toDate(positions[currentIndex].timeSat);
+  
+    const orbitLine = viewer.entities.add({
+      polyline: {
+        positions: [positions[currentIndex].positionSat],
+        width: 2,
+        material: new Cesium.PolylineGlowMaterialProperty({
+          glowPower: 0.1,
+          color: Cesium.Color.YELLOW,
+        }),
+      },
+    });
+  
+    const updateOrbitPath = () => {
+      const currentTime = Cesium.JulianDate.now();
+      const deltaTime = Cesium.JulianDate.secondsDifference(currentTime, positions[currentIndex].timeSat);
+  
+      if (deltaTime >= timeInterval / 1000) {
+        currentIndex++;
+        if (currentIndex >= positions.length) {
+          currentIndex = 0;
+        }
+  
+        const newPosition = positions[currentIndex].positionSat;
+        orbitLine.polyline.positions.setValue(0, newPosition);
+  
+        lastUpdateTime = Cesium.JulianDate.toDate(positions[currentIndex].timeSat);
+      }
+    };
+  
+    viewer.clock.onTick.addEventListener(updateOrbitPath);
   }
 
   // ... other Cesium-related methods ...

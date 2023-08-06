@@ -29,7 +29,7 @@ body {
   position: fixed;
   bottom: 0px;
   padding: 16px;
-  border-radius: 12px;
+  border-radius: 0px 12px 0px 0px;
   color: white;
   font-size: 30px;
   z-index: 2;
@@ -43,4 +43,28 @@ body {
   justify-content: center;
   border-radius: 12px;
   background: rgba(5, 20, 27, 0.6);
+}
+
+.infoSatellite{
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  position: fixed;
+  border-radius: 12px 0px 0px 0px;
+  bottom: 0;
+  right: 0;
+  color: white;
+  padding: 16px;
+  background: linear-gradient(180deg, rgba(5, 20, 27, 0.00) 0%, rgba(5, 20, 27, 0.30) 18.75%);
+  z-index: 2;
+
+  .infoData{
+
+    display: flex;
+    align-items: center;
+    padding: 12px;
+    justify-content: center;
+    border-radius: 12px;
+    background: rgba(5, 20, 27, 0.6);
+  }
 }

@@ -21,13 +21,13 @@ export class SatelliteTracker {
     ];
     this.ulList = document.getElementById('ShowlistExist');
     this.namesElements = document.getElementById('sateSelec');
-    // this.showButton = document.querySelector(".show-button");
 
     this.init();
   }
 
   async init() {
     await this.loadSatellites();
+    this.startRealTimeTracking();
     // ... other initialization ...
   }
 //searchSatellitesToShow
@@ -36,6 +36,7 @@ async loadSatellites() {
     for (const sat of this.lisToShowSatellites) { // Use 'this' to refer to the class property
       const nameSat = sat.name;
       const satrec = satellite.twoline2satrec(sat.tle1, sat.tle2);
+      
       this.cesiumViewer.loadMap(satrec, nameSat); // Call the method on the cesiumViewer instance
     }
   } catch (error) {
@@ -96,5 +97,29 @@ async loadSatellites() {
     }
   }
   // ... other satellite-related methods ...
-
+  async startRealTimeTracking() {
+    try {
+      setInterval(() => {
+        for (const sat of this.lisToShowSatellites) {
+          const nameSat = sat.name;
+          const satrec = satellite.twoline2satrec(sat.tle1, sat.tle2);
+            const date = new Date();
+            const positionAndVelocity = satellite.propagate(satrec, date);
+            const gmst = satellite.gstime(date);
+            const position = satellite.eciToGeodetic(positionAndVelocity.position, gmst);
+          // console.log(position);
+          const latitude = (position.latitude * 180 / Math.PI).toFixed(4);
+          const longitude = (position.longitude * 180 / Math.PI).toFixed(4);
+          const height = (position.height).toFixed(2);
+          // console.log(latitude);
+          // console.log(longitude);
+          document.getElementById('LatSat').textContent = `Latitud: ${latitude}°`;
+          document.getElementById('LongSat').textContent = `Longitud: ${longitude}°`;
+          document.getElementById('heightSat').textContent = `Altura: ${height} Km`;
+        }
+      }, 1000); // Update every 1 second
+    } catch (error) {
+      console.error(error);
+    }
+  }
 }
