@@ -19,11 +19,34 @@ export class SatelliteTracker {
       // },
       // ... Add more satellites here
     ];
+    this.searchInput = document.getElementById("searchInput")
+    this.searchButton = document.getElementById("searchButton");
     this.ulList = document.getElementById('ShowlistExist');
     this.namesElements = document.getElementById('sateSelec');
 
     this.init();
 
+    this.searchInput.addEventListener('input',(event) => {
+      const typedText = event.target.value.trim().toLowerCase();
+      const filteredSatellites = this.SatsNames.filter(name => name.toLowerCase().includes(typedText));
+      // Limpia las opciones previas del datalist
+      satelliteOptions.innerHTML = '';
+      // Agrega las opciones filtradas al datalist
+      filteredSatellites.forEach(name => {
+        const optionElement = document.createElement("option");
+        optionElement.value = name;
+        satelliteOptions.appendChild(optionElement);
+      });
+    });
+
+    this.searchButton.addEventListener('click', () => {
+      const typedText = searchInput.value;
+      const selectedSatellite = this.SatsNames.find(name => name === typedText);
+      if(selectedSatellite){
+        console.log('Send Satellite Search:', typedText);
+        this.searchSat(typedText);
+      }
+    });
   }
 
   async init() {
