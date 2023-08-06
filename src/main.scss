@@ -20,12 +20,13 @@ body {
   display: none !important;
 }
 
-#cesiumClockInfo {
+.timeClock {
   width: auto;
   display: flex;
+  flex-direction: column;
   align-items: center;
   justify-content: center;
-  gap: 5px;
+  gap: 10px;
   position: fixed;
   bottom: 0px;
   padding: 16px;
@@ -35,6 +36,14 @@ body {
   z-index: 2;
   background: linear-gradient(180deg, rgba(5, 20, 27, 0.00) 0%, rgba(5, 20, 27, 0.30) 18.75%);
 }
+.timeClockInfo{
+  display: flex;
+  flex-direction: row;
+}
+.contButton{
+  gap: 10px;
+}
+
 .timeSat{
   width: 50px;
   height: 50px;
@@ -67,4 +76,24 @@ body {
     border-radius: 12px;
     background: rgba(5, 20, 27, 0.6);
   }
+}
+
+
+button {
+  width: 50px;
+  position: relative;
+  height: 2.5em;
+  border: 3px ridge #c6c6c6;
+  outline: none;
+  background-color: transparent;
+  color: white;
+  transition: 1s;
+  border-radius: 0.3em;
+  font-size: 16px;
+  font-weight: bold;
+}
+
+button:hover {
+  border: 3px ridge #149CEA;
+  box-shadow: inset 0px 0px 25px #1479EA;
 }

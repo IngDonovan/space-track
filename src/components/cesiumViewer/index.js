@@ -15,6 +15,15 @@ export class CesiumViewer {
     });
     this.initClock();
     this.initUpdateClockInfo();
+    this.realSpeed = document.getElementById('realSpeed');
+    this.realSpeed.addEventListener('click', () => {
+
+    this.changeAnimationSpeed(1); // Cambia la velocidad como desees
+  });
+    this.speedButton = document.getElementById('speedButton');
+    this.speedButton.addEventListener('click', () => {
+    this.changeAnimationSpeed(40); // Cambia la velocidad como desees
+  });
   }
 
   initClock() {
@@ -75,10 +84,10 @@ export class CesiumViewer {
       const gmst = satellite.gstime(jsDate);
       const p = satellite.eciToGeodetic(positionAndVelocity.position, gmst);
       const position = Cesium.Cartesian3.fromRadians(p.longitude, p.latitude, p.height * 1000);
-      orbitPositions.push({
-        timeSat:time,
-        positionSat:position,
-      });
+      // orbitPositions.push({
+      //   timeSat:time,
+      //   positionSat:position,
+      // });
       positionsOverTime.addSample(time, position);
       // console.log(time);
       // console.log(position);
@@ -185,4 +194,7 @@ export class CesiumViewer {
   }
 
   // ... other Cesium-related methods ...
+  changeAnimationSpeed(speed) {
+    this.viewer.clock.multiplier = speed;
+  }
 }

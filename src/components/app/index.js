@@ -16,10 +16,16 @@ export function initApp() {
       ${loadingView}
       ${headerView}
       ${menuBarView}
-      <div id="cesiumClockInfo">
-        <span id="hourElement" class="timeSat">00</span>:
-        <span id="minuteElement" class="timeSat">00</span>:
-        <span id="secElement" class="timeSat">00</span> 
+      <div class="timeClock">
+        <div class= "timeClockInfo contButton">
+          <button id="realSpeed">1X</button>
+          <button id="speedButton">40X</button>
+        </div>
+        <div class="timeClockInfo contClock">
+          <span id="hourElement" class="timeSat">00</span>:
+          <span id="minuteElement" class="timeSat">00</span>:
+          <span id="secElement" class="timeSat">00</span> 
+        </div>
       </div>
       <div class="infoSatellite">
         <span id="LatSat" class="infoData">Grados</span>

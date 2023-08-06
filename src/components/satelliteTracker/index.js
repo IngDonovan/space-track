@@ -23,6 +23,7 @@ export class SatelliteTracker {
     this.namesElements = document.getElementById('sateSelec');
 
     this.init();
+
   }
 
   async init() {
@@ -31,18 +32,18 @@ export class SatelliteTracker {
     // ... other initialization ...
   }
 //searchSatellitesToShow
-async loadSatellites() {
-  try {
-    for (const sat of this.lisToShowSatellites) { // Use 'this' to refer to the class property
-      const nameSat = sat.name;
-      const satrec = satellite.twoline2satrec(sat.tle1, sat.tle2);
-      
-      this.cesiumViewer.loadMap(satrec, nameSat); // Call the method on the cesiumViewer instance
+  async loadSatellites() {
+    try {
+      for (const sat of this.lisToShowSatellites) { // Use 'this' to refer to the class property
+        const nameSat = sat.name;
+        const satrec = satellite.twoline2satrec(sat.tle1, sat.tle2);
+        
+        this.cesiumViewer.loadMap(satrec, nameSat); // Call the method on the cesiumViewer instance
+      }
+    } catch (error) {
+      console.error(error);
     }
-  } catch (error) {
-    console.error(error);
   }
-}
 //----------------revisar
   async searchSatellitesToShow() {
     try {
@@ -108,8 +109,8 @@ async loadSatellites() {
             const gmst = satellite.gstime(date);
             const position = satellite.eciToGeodetic(positionAndVelocity.position, gmst);
           // console.log(position);
-          const latitude = (position.latitude * 180 / Math.PI).toFixed(4);
-          const longitude = (position.longitude * 180 / Math.PI).toFixed(4);
+          const latitude = (position.latitude * 180 / Math.PI).toFixed(2);
+          const longitude = (position.longitude * 180 / Math.PI).toFixed(2);
           const height = (position.height).toFixed(2);
           // console.log(latitude);
           // console.log(longitude);
@@ -122,4 +123,6 @@ async loadSatellites() {
       console.error(error);
     }
   }
+
+
 }
