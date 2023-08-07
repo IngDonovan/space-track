@@ -125,6 +125,9 @@ export class SatelliteTracker {
     try {
       setInterval(() => {
         for (const sat of this.lisToShowSatellites) {
+          // const cesiumClock = this.viewer.clock;
+          // const currentTime = this.Cesium.JulianDate.toDate(cesiumClock.currentTime);
+
           const nameSat = sat.name;
           const satrec = satellite.twoline2satrec(sat.tle1, sat.tle2);
             const date = new Date();

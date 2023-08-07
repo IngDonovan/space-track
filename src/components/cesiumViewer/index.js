@@ -17,13 +17,13 @@ export class CesiumViewer {
     this.initUpdateClockInfo();
     this.realSpeed = document.getElementById('realSpeed');
     this.realSpeed.addEventListener('click', () => {
-
     this.changeAnimationSpeed(1); // Cambia la velocidad como desees
   });
     this.speedButton = document.getElementById('speedButton');
     this.speedButton.addEventListener('click', () => {
     this.changeAnimationSpeed(40); // Cambia la velocidad como desees
   });
+  this.initMapButtons(); // Agregamos la inicialización de los botones de mapa
   }
 
   initClock() {
@@ -197,4 +197,27 @@ export class CesiumViewer {
   changeAnimationSpeed(speed) {
     this.viewer.clock.multiplier = speed;
   }
+
+  toggle2DMap() {
+    this.viewer.scene.morphTo2D(1); // Cambia al modo 2D
+  }
+
+  toggleOrbitalMap() {
+    this.viewer.scene.morphTo3D(1); // Cambia al modo orbital
+    
+  }
+
+  initMapButtons() {
+    const cesiumViewer = this;
+
+    document.getElementById('toggle2DButton').addEventListener('click', () => {
+      cesiumViewer.toggle2DMap();
+    });
+
+    document.getElementById('toggleOrbitalButton').addEventListener('click', () => {
+      cesiumViewer.toggleOrbitalMap();
+    });
+  }
+
+
 }

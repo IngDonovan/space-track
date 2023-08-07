@@ -97,3 +97,14 @@ button:hover {
   border: 3px ridge #149CEA;
   box-shadow: inset 0px 0px 25px #1479EA;
 }
+
+#toggle2DButton, #toggleOrbitalButton{
+  position: fixed;
+  z-index: 2;
+}
+#toggle2DButton{
+  top: 100px;
+}
+#toggleOrbitalButton{
+  top: 200px;
+}
