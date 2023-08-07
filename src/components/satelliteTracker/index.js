@@ -1,3 +1,4 @@
+import * as Cesium from 'cesium';
 import * as satellite from 'satellite.js';
 import { fetchData } from '../utils';
 
@@ -125,15 +126,21 @@ export class SatelliteTracker {
     try {
       setInterval(() => {
         for (const sat of this.lisToShowSatellites) {
-          // const cesiumClock = this.viewer.clock;
-          // const currentTime = this.Cesium.JulianDate.toDate(cesiumClock.currentTime);
-
+          
           const nameSat = sat.name;
           const satrec = satellite.twoline2satrec(sat.tle1, sat.tle2);
-            const date = new Date();
-            const positionAndVelocity = satellite.propagate(satrec, date);
-            const gmst = satellite.gstime(date);
-            const position = satellite.eciToGeodetic(positionAndVelocity.position, gmst);
+          
+          const viewer = this.cesiumViewer.viewer;
+          // console.log(viewer);
+          const cesiumClock = viewer.clock;
+          // console.log(cesiumClock);
+          // const currentTime = cesiumClock.currentTime;
+          const currentTime = Cesium.JulianDate.toDate(cesiumClock.currentTime); 
+          // console.log(currentTime);
+          const date = new Date();
+          const positionAndVelocity = satellite.propagate(satrec, currentTime);
+          const gmst = satellite.gstime(currentTime);
+          const position = satellite.eciToGeodetic(positionAndVelocity.position, gmst);
           // console.log(position);
           const latitude = (position.latitude * 180 / Math.PI).toFixed(2);
           const longitude = (position.longitude * 180 / Math.PI).toFixed(2);
