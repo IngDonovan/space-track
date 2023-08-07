@@ -91,9 +91,12 @@ In order to be iterable, non-array objects must have a [Symbol.iterator]() metho
         </div>
       </div>
       <div class="infoSatellite">
-        <span id="NameSat" class="infoData">Satellite</span>
-        <span id="LatSat" class="infoData">Grados</span>
-        <span id="LongSat" class="infoData">Grados</span>
-        <span id="heightSat" class="infoData">Km</span> 
+        <span class="infoData">Coordenadas</span>
+        <div>
+          <span id="NameSat" class="infoData">Satellite</span>
+          <span id="LatSat" class="infoData">Grados</span>
+          <span id="LongSat" class="infoData">Grados</span>
+          <span id="heightSat" class="infoData">Km</span> 
+        </div>
       </div>
     `;const i=document.querySelector(".menu");document.getElementById("trackID");const r=document.querySelector(".show-button"),n=new ue,a=new pe(e,n);i.addEventListener("click",()=>Ce(a)),a.namesElements.addEventListener("change",v=>ze(a,v)),r.addEventListener("click",()=>ce(a))}function ce(e){e.loadSatellites()}function ze(e,o){let i=o.target.value;e.searchSat(i)}function Ce(e){trackID.classList.contains("inactive")&&(e.addListSatellites(),e.SatsNames.length===0&&e.searchSatellitesToShow()),trackID.classList.toggle("inactive")}xe();
