@@ -15,8 +15,7 @@ export const menuBarView =`
     <p>All</p>
     <div class="container">
       <select name="sateSelec" id="sateSelec">
-          <!-- <option>ISS</option>
-          <option>PlatziSat-1</option> -->
+        <option></option>
       </select>
     </div>
     <ul id="ShowlistExist"></ul>
