@@ -8,11 +8,15 @@ Space program
 
 ## Description
 
------
+This satellite tracking project developed for Platzi focuses on real-time visualization and tracking of satellites. Utilizing Vite.js and Sass technology, this application offers an intuitive interface that allows users to explore the location and orbit of specific satellites. Users can switch between 2D and 3D views to observe satellites from different perspectives, and they also have the ability to adjust the animation speed. Additionally, the application displays detailed information about the geographical coordinates of satellites and the current time.
 
 ## Features
 
-------
+- Real-Time Visualization: Users can see the real-time location of various orbiting satellites.
+- Perspective Switching: Users can switch between 2D and 3D views to observe satellites from different angles.
+- Speed Control: Users can adjust the animation speed to track satellite paths at different speeds.
+- Satellite Details: The application provides detailed information about the geographical coordinates and current time of selected satellites.
+- Intuitive Interface: User-friendly and easy-to-use interface design for a seamless user experience.
 
 ## Technologies Used
 
