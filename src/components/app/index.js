@@ -32,7 +32,7 @@ export function initApp() {
         </div>
       </div>
       <div class="infoSatellite">
-        <span class="infoData">Coordenadas</span>
+        <span class="infoData textTitle">Coordenadas</span>
         <div>
           <span id="NameSat" class="infoData">Satellite</span>
           <span id="LatSat" class="infoData">Grados</span>
@@ -56,11 +56,13 @@ export function initApp() {
     // menuIco.addEventListener('click', () => toggleMenu(satelliteTracker));
     menuIco.addEventListener('click', () => {
       if (!cesiumViewer.is3DMode()) {
+        // menuIco.classList.add('inactive');
         return; // Si estás en modo 2D, no se permite abrir el menú
       }
-      
+
       toggleMenu(satelliteTracker);
     });
+
     
     satelliteTracker.namesElements.addEventListener('change', (event) => selectNameElement(satelliteTracker, event));
 
