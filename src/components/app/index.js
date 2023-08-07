@@ -32,10 +32,13 @@ export function initApp() {
         </div>
       </div>
       <div class="infoSatellite">
-        <span id="NameSat" class="infoData">Satellite</span>
-        <span id="LatSat" class="infoData">Grados</span>
-        <span id="LongSat" class="infoData">Grados</span>
-        <span id="heightSat" class="infoData">Km</span> 
+        <span class="infoData">Coordenadas</span>
+        <div>
+          <span id="NameSat" class="infoData">Satellite</span>
+          <span id="LatSat" class="infoData">Grados</span>
+          <span id="LongSat" class="infoData">Grados</span>
+          <span id="heightSat" class="infoData">Km</span> 
+        </div>
       </div>
     `;
 

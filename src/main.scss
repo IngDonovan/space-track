@@ -59,26 +59,34 @@ body {
 .infoSatellite{
   display: flex;
   flex-direction: column;
-  gap: 5px;
+  gap: 16px;
   position: fixed;
   border-radius: 12px 0px 0px 0px;
-  bottom: 0;
+  bottom: -180px;
   right: 0;
   color: white;
   padding: 16px;
   background: linear-gradient(180deg, rgba(5, 20, 27, 0.00) 0%, rgba(5, 20, 27, 0.30) 18.75%);
   z-index: 2;
+  cursor: pointer;
+  transition: bottom 0.5s ease-in-out;
 
   .infoData{
-
     display: flex;
     align-items: center;
+    
     padding: 12px;
     justify-content: center;
+    font-size: 15px;
     border-radius: 12px;
     background: rgba(5, 20, 27, 0.6);
   }
 }
+
+.infoSatellite:hover{
+  bottom: 0px;
+}
+
 
 
 button {
@@ -99,5 +107,4 @@ button:hover {
   border: 3px ridge #149CEA;
   box-shadow: inset 0px 0px 25px #1479EA;
 }
-
 
