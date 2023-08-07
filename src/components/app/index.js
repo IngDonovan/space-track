@@ -53,7 +53,14 @@ export function initApp() {
     // Initialize the satellite tracker
     const satelliteTracker = new SatelliteTracker(API, cesiumViewer);
     // ... set up event listeners and interactions ...
-    menuIco.addEventListener('click', () => toggleMenu(satelliteTracker));
+    // menuIco.addEventListener('click', () => toggleMenu(satelliteTracker));
+    menuIco.addEventListener('click', () => {
+      if (!cesiumViewer.is3DMode()) {
+        return; // Si estás en modo 2D, no se permite abrir el menú
+      }
+      
+      toggleMenu(satelliteTracker);
+    });
     
     satelliteTracker.namesElements.addEventListener('change', (event) => selectNameElement(satelliteTracker, event));
 
@@ -73,6 +80,7 @@ export function initApp() {
   function toggleMenu(satelliteTracker) {
     const isAsideClose = trackID.classList.contains('inactive');
     
+
     if (isAsideClose) {
       satelliteTracker.addListSatellites();
       if (satelliteTracker.SatsNames.length === 0) {

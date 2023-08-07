@@ -63,7 +63,8 @@ export class CesiumViewer {
 
   loadMap(satrec, nameSat) {
     const viewer = this.viewer;
-
+    // Eliminar todas las entidades existentes antes de agregar las nuevas
+    // viewer.entities.removeAll();
     const orbitPositions = [];
 
     const totalSeconds = 60 * 60 * 6;
@@ -204,11 +205,31 @@ export class CesiumViewer {
 
   toggle2DMap() {
     this.viewer.scene.morphTo2D(1); // Cambia al modo 2D
+
   }
 
   toggleOrbitalMap() {
     this.viewer.scene.morphTo3D(1); // Cambia al modo orbital
-    
+
+  //   // Ajusta la altura de la cámara para que los objetos sean visibles adecuadamente
+  // const center = Cesium.Cartesian3.fromDegrees(-75, 0); // Coordenadas del centro del mapa
+  // const cameraHeight = 5000000; // Altura de la cámara en metros
+  // viewer.camera.flyTo({
+  //   destination: center,
+  //   orientation: {
+  //     pitch: Cesium.Math.toRadians(-90), // Punto de vista desde arriba
+  //   },
+  //   duration: 1, // Duración de la animación en segundos
+  //   maximumHeight: cameraHeight,
+  //   complete: () => {
+  //     // Aquí puedes agregar cualquier otra lógica que necesites después del ajuste
+  //   },
+  // });
+
+  }
+
+  is3DMode() {
+    return this.viewer.scene.mode === Cesium.SceneMode.SCENE3D;
   }
 
   initMapButtons() {
