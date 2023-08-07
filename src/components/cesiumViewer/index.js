@@ -15,10 +15,14 @@ export class CesiumViewer {
     });
     this.initClock();
     this.initUpdateClockInfo();
-    this.realSpeed = document.getElementById('realSpeed');
-    this.realSpeed.addEventListener('click', () => {
-    this.changeAnimationSpeed(1); // Cambia la velocidad como desees
+ 
+  this.resetSpeedButton = document.getElementById('realSpeed');
+  this.resetSpeedButton.addEventListener('click', () => {
+    this.viewer.clock.currentTime = Cesium.JulianDate.now(); // 
+    this.viewer.clock.multiplier = 1;
+    this.viewer.clock.shouldAnimate = true; // Reinicia la animación
   });
+
     this.speedButton = document.getElementById('speedButton');
     this.speedButton.addEventListener('click', () => {
     this.changeAnimationSpeed(40); // Cambia la velocidad como desees

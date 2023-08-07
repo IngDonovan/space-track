@@ -147,6 +147,7 @@ export class SatelliteTracker {
           const height = (position.height).toFixed(2);
           // console.log(latitude);
           // console.log(longitude);
+          document.getElementById('NameSat').textContent = `${nameSat}`;
           document.getElementById('LatSat').textContent = `Latitud: ${latitude}°`;
           document.getElementById('LongSat').textContent = `Longitud: ${longitude}°`;
           document.getElementById('heightSat').textContent = `Altura: ${height} Km`;

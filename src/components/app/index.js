@@ -16,9 +16,11 @@ export function initApp() {
       ${loadingView}
       ${headerView}
       ${menuBarView}
-      <button id="toggle2DButton">Mapa 2D</button>
-      <button id="toggleOrbitalButton">Mapa 3D</button>
       <div class="timeClock">
+        <div class="timeClockInfo">
+          <button id="toggle2DButton">2D</button>
+          <button id="toggleOrbitalButton">3D</button>
+        </div>
         <div class= "timeClockInfo contButton">
           <button id="realSpeed">1X</button>
           <button id="speedButton">40X</button>
@@ -30,6 +32,7 @@ export function initApp() {
         </div>
       </div>
       <div class="infoSatellite">
+        <span id="NameSat" class="infoData">Satellite</span>
         <span id="LatSat" class="infoData">Grados</span>
         <span id="LongSat" class="infoData">Grados</span>
         <span id="heightSat" class="infoData">Km</span> 
