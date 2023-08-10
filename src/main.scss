@@ -24,7 +24,6 @@ body {
   width: auto;
   display: flex;
   flex-direction: column;
-
   justify-content: left;
   gap: 10px;
   position: fixed;
@@ -89,8 +88,6 @@ body {
 .infoSatellite:hover{
   bottom: 0px;
 }
-
-
 
 button {
   width: 50px;
