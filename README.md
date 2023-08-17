@@ -87,7 +87,7 @@ git push origin feature/new-feature
 This project is licensed under the MIT License - see the LICENSE file for details.
 
 ## Acknowledgements
-Special thanks to #Platzi and -------.
+Special thanks to #Platzi.
 
 ## Authors
 + Donovan Rojas Mendoza - rojasdrm03@gmail.com
