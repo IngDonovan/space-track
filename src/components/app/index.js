@@ -10,6 +10,7 @@ import '../../main.scss';
 
 export function initApp() {
     const API = 'https://api.tinygs.com/v1';
+    Cesium.Ion.defaultAccessToken = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJqdGkiOiI5ZjIyZTdiZi1mODQwLTQ0MjAtOWNlNS1lYTViMDc2OTlmYmQiLCJpZCI6MTU4MTU2LCJpYXQiOjE2OTEwMjQxMTl9.7otDjsYgAlZeullEThcZ8fKanHGXv0Lo2jAn6po1u3E';
     // Render the main app layout
     const appContainer = document.querySelector('#app');
     appContainer.innerHTML = `
